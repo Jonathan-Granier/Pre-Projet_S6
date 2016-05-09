@@ -33,6 +33,7 @@ public class IA {
 		}
 	}
 	
+	
 	// Renvoie un coup aléatoire parmi la liste de coup possible.
 	private Point jouer_coup_aleatoire(){
 		Random R = new Random();
