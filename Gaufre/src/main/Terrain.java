@@ -29,4 +29,14 @@ public class Terrain {
 		}
 		return res;
 	}
+	
+	public void afficher_terrain(){
+		for(int i=0;i<l;i++){
+			for(int j=0;j<h;j++){
+				System.out.print(t[i][j]);
+			}
+			System.out.println();
+		}
+		System.out.println();
+	}
 }
