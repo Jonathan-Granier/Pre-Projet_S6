@@ -91,6 +91,7 @@ public class Moteur {
 		if(histo.size()==1) return 1;
 		else{
 			redo.add(histo.remove(histo.size()-1));
+			T=histo.get(histo.size()-1);
 			swap_joueur();
 			// Maj affichage ?
 			return 0;
@@ -102,6 +103,7 @@ public class Moteur {
 		if(redo.size()==0) return 1;
 		else{
 			histo.add(redo.remove(redo.size()-1));
+			T=histo.get(histo.size()-1);
 			swap_joueur();
 			// Maj affichage ?
 			return 0;
