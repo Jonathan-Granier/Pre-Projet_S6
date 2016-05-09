@@ -20,12 +20,14 @@ public class IA {
 		this.t = moteur.T;
 	}
 	
-	// Renvoie un coup. Pas d'autre effet de bord.
+	// Determine le prochain coup à jouer et le renvoie.
 	public Point jouer_coup(){
 		switch (difficulte)
 		{
 		case 1:
 			return jouer_coup_aleatoire();
+		case 2:
+			return jouer_coup_perdant_gagnant();
 		default:
 			return new Point(0,0);
 		}
@@ -38,6 +40,45 @@ public class IA {
 		Point coup = list_possibilite.get(R.nextInt(list_possibilite.size()));
 		return coup;
 	}
+	
+	// Renvoie un coup gagnant s'il en existe un, sinon renvoie un coup non perdant aléatoire.
+	private Point jouer_coup_perdant_gagnant()
+	{
+		ArrayList <Point> list_coups = moteur.coups_possibles();
+		ArrayList <Point> coups_gagnants = new ArrayList();
+		ArrayList <Point> coups_perdants = new ArrayList();
+		ArrayList <Point> coups_neutres = new ArrayList();
+		for(int i=0; i< list_coups.size(); i++)
+		{
+			if(est_gagnant(list_coups.get(i)))
+			{
+				coups_gagnants.add(list_coups.get(i));
+			}
+			else if(est_perdant(list_coups.get(i)))
+			{
+				coups_perdants.add(list_coups.get(i));
+			}
+			else
+			{
+				coups_neutres.add(list_coups.get(i));
+			}
+		}
+		
+		Random R = new Random();
+		// s'il existe un coup gagnant, on en renvoie un.
+		if(! coups_gagnants.isEmpty()){
+			return coups_gagnants.get(R.nextInt(coups_gagnants.size()));
+		}
+		// s'il n'existe pas de coup gagnant, on renvoie un coup non perdant s'il en existe un.
+		else if( !coups_neutres.isEmpty()){
+			return coups_neutres.get(R.nextInt(coups_neutres.size()));
+		}
+		// s'il n'existe que des coups perdants, on en renvoie un.
+		else {
+			return coups_perdants.get(R.nextInt(coups_perdants.size()));
+		}
+	}
+	
 	/*
 	 Un coup est perdant si après celui-ci
 	 l'adversaire se retrouve avec un terrain d'une seule ligne/colonne
