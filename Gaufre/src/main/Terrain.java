@@ -21,6 +21,12 @@ public class Terrain {
 	}
 	
 	public Terrain clone(){
-		return this.clone();
+		Terrain res = new Terrain(l,h);
+		for(int i=0;i<l;i++){
+			for(int j=0;j<h;j++){
+				res.t[i][j]=t[i][j];
+			}
+		}
+		return res;
 	}
 }

@@ -18,6 +18,16 @@ public class Moteur {
 		joueur = r.nextInt(2) + 1;
 	}
 	
+	// Réinitialise le terrain
+	void nouvelle_partie(){
+		T = new Terrain(T.l,T.h);
+		histo.clear();
+		histo.add(T);
+		redo.clear();
+		Random r = new Random();
+		joueur = r.nextInt(2) + 1;
+	}
+	
 	// Change de joueur 1 <-> 2
 	void swap_joueur(){
 		if(joueur==1) joueur=2;
