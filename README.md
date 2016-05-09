@@ -17,7 +17,7 @@ Moteur.java : contient un terrain, permet de :
 - Déterminer si la partie est terminée  
 
 IA.java : 
--Prend un moteur en argument de constructeur et une difficulté  
+- Prend un moteur en argument de constructeur et une difficulté  
 - A une fonction jouer_coup();  
 
 
