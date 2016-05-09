@@ -12,7 +12,7 @@ Terrain.java : L'etat actuel du terrain
                 -> matrice de booléens. vrai <=> on peut jouer sur la case  
 
 Moteur.java : contient un terrain, permet de :  - Connaitre les coups possibles  
-												- Jouer un coup (joueur 1 ou 2)  
+												                        - Jouer un coup (joueur 1 ou 2)  
                                                 - Déterminer si la partie est terminée  
 
 IA.java : - Prend un moteur en argument de constructeur et une difficulté  
