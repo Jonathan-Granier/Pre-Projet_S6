@@ -33,7 +33,7 @@ public class Terrain {
 	public void afficher(){
 		for(int i=0;i<h;i++){
 			for(int j=0;j<l;j++){
-				if(t[i][j]) System.out.print("1");
+				if(t[j][i]) System.out.print("1");
 				else System.out.print("0");
 			}
 			System.out.println();
