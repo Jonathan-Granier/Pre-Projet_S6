@@ -12,8 +12,22 @@ public class Moteur {
 	public Moteur(Terrain T){
 		this.T=T;
 		histo=new ArrayList<Terrain>();
-		histo.add(T);
+		histo.add(T.clone());
 		redo=new ArrayList<Terrain>();
+		Random r = new Random();
+		joueur = r.nextInt(2) + 1;
+	}
+	
+	// Réinitialise le terrain
+	void nouvelle_partie(){
+		for(int i=0;i<T.l;i++){
+			for(int j=0;j<T.h;j++){
+				T.t[i][j]=true;
+			}
+		}
+		histo.clear();
+		histo.add(T.clone());
+		redo.clear();
 		Random r = new Random();
 		joueur = r.nextInt(2) + 1;
 	}
@@ -78,9 +92,16 @@ public class Moteur {
 	
 	// Recule d'un cran dans l'historique. Renvoie 0 si tout s'est bien passé, 1 si on est déjà au terrain de départ.
 	public int annuler(){
-		if(histo.size()==1) return 1;
+		System.out.println("Appel a annuler");
+		if(histo.size()==1){
+			System.out.println("Histo vide !");
+			return 1;
+		}
 		else{
 			redo.add(histo.remove(histo.size()-1));
+			T=histo.get(histo.size()-1).clone();
+			System.out.println("Nouveau T :");
+			T.afficher();
 			swap_joueur();
 			// Maj affichage ?
 			return 0;
@@ -92,6 +113,9 @@ public class Moteur {
 		if(redo.size()==0) return 1;
 		else{
 			histo.add(redo.remove(redo.size()-1));
+			T=histo.get(histo.size()-1);
+			System.out.println("Nouveau T :");
+			T.afficher();
 			swap_joueur();
 			// Maj affichage ?
 			return 0;
