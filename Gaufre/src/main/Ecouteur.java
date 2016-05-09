@@ -24,6 +24,10 @@ public class Ecouteur implements ActionListener {
     		moteur.refaire();
     		aire.repaint();
     	}
+    	else if(label.equals("Nouveaux")){
+    		moteur.nouvelle_partie();
+    		aire.repaint();
+    	}
     }
 
 	

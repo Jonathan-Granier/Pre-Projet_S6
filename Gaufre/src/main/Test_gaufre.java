@@ -28,12 +28,6 @@ public class Test_gaufre {
 		item = new JMenuItem("Charger");
 		item.addActionListener(new Ecouteur("Charger",moteur,aire));
 		principal.add(item);
-		item = new JMenuItem("Annuler");
-		item.addActionListener(new Ecouteur("Annuler",moteur,aire));
-		principal.add(item);
-		item = new JMenuItem("Refaire");
-		item.addActionListener(new Ecouteur("Refaire",moteur,aire));
-		principal.add(item);
 		return principal;
 	}
 

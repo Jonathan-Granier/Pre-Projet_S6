@@ -36,9 +36,6 @@ class AireDeDessin extends JComponent {
         			 drawable.setPaint(Color.black);
         			 drawable.drawRect(i*width/t.l, j*height/t.h, width/t.l, height/t.h);
         			 
-        		 }else{
-        			 drawable.setPaint(Color.white);
-        			 drawable.fillRect(i*width/t.l, j*height/t.h, width/t.l, height/t.h);
         		 }
         	 }
         
