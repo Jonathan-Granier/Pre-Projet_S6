@@ -18,11 +18,13 @@ public class Moteur {
 		joueur = r.nextInt(2) + 1;
 	}
 	
+	// Change de joueur 1 <-> 2
 	void swap_joueur(){
 		if(joueur==1) joueur=2;
 		else joueur=1;
 	}
 	
+	// Détermine si la partie est terminée (il ne reste que le poison)
 	public boolean partie_terminee(){
 		return !T.t[1][0] && !T.t[0][1];
 	}
@@ -80,6 +82,7 @@ public class Moteur {
 		else{
 			redo.add(histo.remove(histo.size()-1));
 			swap_joueur();
+			// Maj affichage ?
 			return 0;
 		}
 	}
@@ -90,6 +93,7 @@ public class Moteur {
 		else{
 			histo.add(redo.remove(redo.size()-1));
 			swap_joueur();
+			// Maj affichage ?
 			return 0;
 		}
 	}
