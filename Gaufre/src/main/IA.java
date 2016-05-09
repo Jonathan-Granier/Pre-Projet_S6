@@ -1,16 +1,50 @@
 package main;
 
 import java.awt.Point;
+import java.util.ArrayList;
+import java.util.Random;
 
+/* Difficultés: 1: IA aléatoire
+ * 				2: IA Aléatoire + coups gagnants/perdants
+ * 				3: IA MinMax
+ */
 public class IA {
+	Moteur moteur;
+	int difficulte;
 	Terrain t;
+	
+	public IA (Moteur moteur, int difficulte)
+	{
+		this.moteur = moteur;
+		this.difficulte = difficulte;
+		this.t = moteur.T;
+	}
+	
+	// Renvoie un coup. Pas d'autre effet de bord.
+	public Point jouer_coup(){
+		switch (difficulte)
+		{
+		case 1:
+			return jouer_coup_aleatoire();
+		default:
+			return new Point(0,0);
+		}
+	}
+	
+	// Renvoie un coup aléatoire parmi la liste de coup possible.
+	private Point jouer_coup_aleatoire(){
+		Random R = new Random();
+		ArrayList<Point> list_possibilite = moteur.coups_possibles();
+		Point coup = list_possibilite.get(R.nextInt(list_possibilite.size()));
+		return coup;
+	}
 	/*
 	 Un coup est perdant si après celui-ci
 	 l'adversaire se retrouve avec un terrain d'une seule ligne/colonne
 	 d'une longueur supérieur à 1.
 	 On suppose le coup possible et qu'il n'y a pas de coup gagnant.
 	 */
-	public boolean est_perdant(Point coup)
+	private boolean est_perdant(Point coup)
 	{
 		// Les coups perdants ont forcement une coordonée <2
 		if(coup_egal(coup, 0,1) && t.t[1][0])
@@ -30,7 +64,7 @@ public class IA {
 	  X O
 	  O
 	 */
-	public boolean est_gagnant(Point coup)
+	private boolean est_gagnant(Point coup)
 	{
 		//L'une des case adjacente est déjà bloqué et on bloque l'autre.
 		if( !t.t[0][1] && coup_egal(coup,1,0))
@@ -58,7 +92,7 @@ public class IA {
 		return false;
 	}
 	
-	public boolean coup_egal(Point coup, int x, int y)
+	private boolean coup_egal(Point coup, int x, int y)
 	{
 		return coup.x == x && coup.y ==y;
 	}
