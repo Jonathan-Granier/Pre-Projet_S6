@@ -15,4 +15,8 @@ public class Terrain {
 			}
 		}
 	}
+	
+	public Terrain clone(){
+		return this.clone();
+	}
 }
