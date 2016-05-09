@@ -42,15 +42,21 @@ public class Test_gaufre {
 		return barre;
 	}
 	
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		
-		JFrame frame = new JFrame("Gauffre");
-		
+	public static void titleScreen(JFrame frame){
+		JPanel panel = new JPanel();
+		JLabel joueur1 = new JLabel ("Joueur1");
+		joueur1.setHorizontalAlignment(SwingConstants.CENTER);
+		JLabel joueur2 = new JLabel ("Joueur2");
+		joueur2.setHorizontalAlignment(SwingConstants.CENTER);
+		frame.add(joueur1,BorderLayout.WEST);
+		frame.add(joueur2,BorderLayout.EAST);
+	}
+	
+	public static void game(JFrame frame){
 		Terrain terrain = new Terrain(4,6);
 		Moteur moteur = new Moteur(terrain);
 		//Aire de dessin
-		AireDeDessin aire = new AireDeDessin(terrain);
+		AireDeDessin aire = new AireDeDessin(moteur);
 		aire.addMouseListener(new EcouteurDeSouris(aire,moteur));
 		
 		JPanel panel = new JPanel();
@@ -80,7 +86,15 @@ public class Test_gaufre {
 		frame.add(panel,BorderLayout.EAST);
 		frame.setJMenuBar(menu(moteur,aire));
 		
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);		
+	}
+	
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+		JFrame frame = new JFrame("Gauffre");
+		
+		game(frame);
 		
 		frame.setSize(500, 500);
 		frame.setVisible(true);

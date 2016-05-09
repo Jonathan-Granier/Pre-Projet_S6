@@ -4,15 +4,15 @@ import javax.swing.*;
 
 class AireDeDessin extends JComponent {
 
-	Terrain t;
+	Moteur moteur;
 	
-	public AireDeDessin(Terrain t){
-		this.t=t;
+	public AireDeDessin(Moteur moteur){
+		this.moteur=moteur;
 	}
 	
 	public Point Case(int x, int y){
-		int ratioX =getSize().width/t.l;
-		int ratioY = getSize().height/t.h;
+		int ratioX =getSize().width/moteur.T.l;
+		int ratioY = getSize().height/moteur.T.h;
 		return new Point(x/ratioX,y/ratioY);
 	}
 	
@@ -28,20 +28,20 @@ class AireDeDessin extends JComponent {
         
         
 
-        for(int i=0;i<t.l;i++)
-        	 for(int j=0;j<t.h;j++){
-        		 if(t.t[i][j]){
+        for(int i=0;i<moteur.T.l;i++)
+        	 for(int j=0;j<moteur.T.h;j++){
+        		 if(moteur.T.t[i][j]){
         			 drawable.setPaint(Color.yellow);
-        			 drawable.fillRect(i*width/t.l, j*height/t.h, width/t.l, height/t.h);
+        			 drawable.fillRect(i*width/moteur.T.l, j*height/moteur.T.h, width/moteur.T.l, height/moteur.T.h);
         			 drawable.setPaint(Color.black);
-        			 drawable.drawRect(i*width/t.l, j*height/t.h, width/t.l, height/t.h);
+        			 drawable.drawRect(i*width/moteur.T.l, j*height/moteur.T.h, width/moteur.T.l, height/moteur.T.h);
         			 
         		 }
         	 }
         
         drawable.setPaint(Color.red);
-        int size = Math.min((width/t.l), (height/t.h));
-        Point center= new Point(((width/t.l) - size)/2,((height/t.h) - size)/2);
+        int size = Math.min((width/moteur.T.l), (height/moteur.T.h));
+        Point center= new Point(((width/moteur.T.l) - size)/2,((height/moteur.T.h) - size)/2);
         drawable.fillOval(center.x,center.y, size,size);
         drawable.setPaint(Color.black);
         
