@@ -20,7 +20,11 @@ public class Moteur {
 	
 	// Réinitialise le terrain
 	void nouvelle_partie(){
-		T = new Terrain(T.l,T.h);
+		for(int i=0;i<T.l;i++){
+			for(int j=0;j<T.h;j++){
+				T.t[i][j]=true;
+			}
+		}
 		histo.clear();
 		histo.add(T);
 		redo.clear();
