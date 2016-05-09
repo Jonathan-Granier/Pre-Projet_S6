@@ -13,7 +13,7 @@ public class IA {
 	public boolean est_perdant(Point coup)
 	{
 		// Les coups perdants ont forcement une coordonée <2
-		if((coup.x == 0 && coup.y==1) && t.t[1][0])
+		if(coup_egal(coup, 0,1) && t.t[1][0])
 		{
 			return true;
 		}
