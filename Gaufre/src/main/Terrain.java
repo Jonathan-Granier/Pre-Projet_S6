@@ -6,8 +6,12 @@ public class Terrain {
 	int l,h;
 	
 	public Terrain(int l, int h){
-		this.l=l;
-		this.h=h;
+		
+		if(l<2) this.l=2;
+		else this.l=l;
+		if(h<2) this.h=2;
+		else this.h=h;
+		
 		t=new boolean[l][h];
 		for(int i=0;i<l;i++){
 			for(int j=0;j<h;j++){

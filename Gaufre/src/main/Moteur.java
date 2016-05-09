@@ -23,6 +23,10 @@ public class Moteur {
 		else joueur=1;
 	}
 	
+	public boolean partie_terminee(){
+		return !T.t[1][0] && !T.t[0][1];
+	}
+	
 	// Renvoie vrai <=> le coup donné est autorise
 	public boolean est_autorise(Point coup){
 		if(coup.x<0 || coup.x>=T.l || coup.y<0 || coup.y>=T.h) return false;
@@ -45,7 +49,7 @@ public class Moteur {
 		Terrain tmp = T.clone();
 		int x = coup.x;
 		int y = coup.y;
-		if(tmp.t[x][y]){
+		if(est_autorise(coup)){
 			for(int i=x;i<tmp.l;i++){
 				for(int j=y;j<tmp.h;j++){
 					tmp.t[i][j]=false;
