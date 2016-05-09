@@ -30,9 +30,9 @@ public class Terrain {
 		return res;
 	}
 	
-	public void afficher_terrain(){
-		for(int i=0;i<l;i++){
-			for(int j=0;j<h;j++){
+	public void afficher(){
+		for(int i=0;i<h;i++){
+			for(int j=0;j<l;j++){
 				if(t[i][j]) System.out.print("1");
 				else System.out.print("0");
 			}
