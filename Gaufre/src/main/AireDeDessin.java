@@ -26,12 +26,27 @@ class AireDeDessin extends JComponent {
         drawable.fillRect(0, 0, width, height);
         drawable.setPaint(Color.black);
         
+        
+
         for(int i=0;i<t.l;i++)
         	 for(int j=0;j<t.h;j++){
-        		 Point center= new Point((width/t.l)/2,(height/t.h)/2);
-        		 drawable.drawRect(i*width/t.l, j*height/t.h, width/t.l, height/t.h);
-        		 
+        		 if(t.t[i][j]){
+        			 drawable.setPaint(Color.yellow);
+        			 drawable.fillRect(i*width/t.l, j*height/t.h, width/t.l, height/t.h);
+        			 drawable.setPaint(Color.black);
+        			 drawable.drawRect(i*width/t.l, j*height/t.h, width/t.l, height/t.h);
+        			 
+        		 }else{
+        			 drawable.setPaint(Color.white);
+        			 drawable.fillRect(i*width/t.l, j*height/t.h, width/t.l, height/t.h);
+        		 }
         	 }
+        
+        drawable.setPaint(Color.red);
+        int size = Math.min((width/t.l), (height/t.h));
+        Point center= new Point(((width/t.l) - size)/2,((height/t.h) - size)/2);
+        drawable.fillOval(center.x,center.y, size,size);
+        drawable.setPaint(Color.black);
         
     }
 	

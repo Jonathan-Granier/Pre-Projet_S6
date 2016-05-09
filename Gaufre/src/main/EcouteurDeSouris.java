@@ -8,14 +8,19 @@ import java.awt.event.*;
 class EcouteurDeSouris implements MouseListener, MouseMotionListener {
 	
 	AireDeDessin aire;
+	Moteur moteur;
 	
-	public EcouteurDeSouris(AireDeDessin aire){
+	public EcouteurDeSouris(AireDeDessin aire,Moteur moteur){
 		this.aire = aire;
+		this.moteur = moteur;
 	}
 	
     public void mousePressed(MouseEvent e) {
     	Point p = new Point(aire.Case(e.getX(), e.getY()));
+    	moteur.jouer_coup(p);
+    	moteur.T.afficher();
     	System.out.println(p);
+    	aire.repaint();
     }
 
 	@Override
