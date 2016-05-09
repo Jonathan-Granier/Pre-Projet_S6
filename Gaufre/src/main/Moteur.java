@@ -82,7 +82,6 @@ public class Moteur {
 			histo.add(T.clone());
 			redo.clear();
 			swap_joueur();
-			// Maj affichage ?
 			return 0;
 		}
 		else{
@@ -92,18 +91,11 @@ public class Moteur {
 	
 	// Recule d'un cran dans l'historique. Renvoie 0 si tout s'est bien passé, 1 si on est déjà au terrain de départ.
 	public int annuler(){
-		System.out.println("Appel a annuler");
-		if(histo.size()==1){
-			System.out.println("Histo vide !");
-			return 1;
-		}
+		if(histo.size()==1) return 1;
 		else{
 			redo.add(histo.remove(histo.size()-1));
 			T=histo.get(histo.size()-1).clone();
-			System.out.println("Nouveau T :");
-			T.afficher();
 			swap_joueur();
-			// Maj affichage ?
 			return 0;
 		}
 	}
@@ -114,10 +106,7 @@ public class Moteur {
 		else{
 			histo.add(redo.remove(redo.size()-1));
 			T=histo.get(histo.size()-1);
-			System.out.println("Nouveau T :");
-			T.afficher();
 			swap_joueur();
-			// Maj affichage ?
 			return 0;
 		}
 	}
