@@ -21,9 +21,13 @@ public class Terrain {
 	}
 	
 	public Terrain clone(){
-		System.out.println("Appel de clone.");
 		Terrain res = new Terrain(l,h);
-		res.t=t.clone();
+		res.t=new boolean[l][h];
+		for(int i=0;i<l;i++){
+			for(int j=0;j<h;j++){
+				res.t[i][j]=t[i][j];
+			}
+		}
 		return res;
 	}
 	
