@@ -8,6 +8,7 @@ public class Moteur {
 	Terrain T;
 	int joueur;
 	ArrayList<Terrain> histo,redo;
+	String message;
 	
 	public Moteur(Terrain T){
 		this.T=T;
@@ -15,7 +16,7 @@ public class Moteur {
 		histo.add(T.clone());
 		redo=new ArrayList<Terrain>();
 		joueur = 1;
-		System.out.println("Tour du joueur " + joueur);
+		message = "Tour du joueur " + joueur;
 	}
 	
 	// Réinitialise le terrain
@@ -29,7 +30,7 @@ public class Moteur {
 		histo.add(T.clone());
 		redo.clear();
 		joueur = 1;
-		System.out.println("Tour du joueur " + joueur);
+		message = "Tour du joueur " + joueur;
 	}
 	
 	// Change de joueur 1 <-> 2
@@ -97,14 +98,13 @@ public class Moteur {
 		if(est_autorise(coup)){
 			T=consulter_coup(coup);
 			if(partie_terminee()){
-				System.out.println("Partie terminée !");
-				System.out.println("Le joueur " + joueur + " a gagné !");
+				message = "Partie terminée !\nLe joueur " + joueur + " a gagné !";
 				return -1;
 			}
 			histo.add(T.clone());
 			redo.clear();
 			swap_joueur();
-			System.out.println("Tour du joueur " + joueur);
+			message = "Tour du joueur " + joueur;
 			return 0;
 		}
 		else{
@@ -119,7 +119,7 @@ public class Moteur {
 			redo.add(histo.remove(histo.size()-1));
 			T=histo.get(histo.size()-1).clone();
 			swap_joueur();
-			System.out.println("Tour du joueur " + joueur);
+			message = "Tour du joueur " + joueur;
 			return 0;
 		}
 	}
@@ -131,7 +131,7 @@ public class Moteur {
 			histo.add(redo.remove(redo.size()-1));
 			T=histo.get(histo.size()-1);
 			swap_joueur();
-			System.out.println("Tour du joueur " + joueur);
+			message = "Tour du joueur " + joueur;
 			return 0;
 		}
 	}
