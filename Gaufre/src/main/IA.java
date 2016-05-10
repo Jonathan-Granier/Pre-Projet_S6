@@ -22,6 +22,7 @@ public class IA {
 	
 	// Determine le prochain coup à jouer et le renvoie.
 	public Point jouer_coup(){
+		System.out.println("IA: On me demande de jouer un coup");
 		switch (difficulte)
 		{
 		case 1:
