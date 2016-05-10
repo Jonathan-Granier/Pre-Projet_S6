@@ -25,10 +25,10 @@ public class IA {
 		case 1:
 			System.out.println("IA [rng]: On me demande de jouer un coup");
 			return jouer_coup_aleatoire();
-		case 3:
+		case 2:
 			System.out.println("IA [rng + win/lose]: On me demande de jouer un coup");
 			return jouer_coup_perdant_gagnant();
-		case 2:
+		case 3:
 			System.out.println("IA [minimax]: On me demande de jouer un coup");
 			return jouer_coup_minimax();
 		default:
@@ -118,8 +118,14 @@ public class IA {
 			
 		}
 		System.out.println("Fin minimax");
-		Point p_retour = list_coups.get(R.nextInt(list_coups.size()));
-		return p_retour;
+		if(! list_coups.isEmpty())
+		{
+			return list_coups.get(R.nextInt(list_coups.size()));
+		}
+		else
+		{
+			return jouer_coup_perdant_gagnant();
+		}
 	}
 	
 	// C'est à B de jouer , si il doit jouer forcement sur la case (0;0) , on renvoi 1 , sinon on renvoi le maximum du prochain coup de A
