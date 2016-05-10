@@ -22,6 +22,7 @@ public class Terrain {
 		}
 	}
 	
+	// Renvoie un clone du Terrain avec une référence différente
 	public Terrain clone(){
 		Terrain res = new Terrain(l,h);
 		res.t=new boolean[l][h];
@@ -33,6 +34,7 @@ public class Terrain {
 		return res;
 	}
 	
+	// Affiche le Terrain dans la console
 	public void afficher(){
 		for(int i=0;i<h;i++){
 			for(int j=0;j<l;j++){
