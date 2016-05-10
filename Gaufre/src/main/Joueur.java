@@ -11,6 +11,12 @@ public class Joueur {
 		this.iaLevel = iaLevel;
 		score = 0;
 	}
+	
+	public void setIaLevel(int iaLevel) {
+		this.iaLevel = iaLevel;
+	}
+
+
 
 	public int getIaLevel() {
 		return iaLevel;

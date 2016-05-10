@@ -34,8 +34,6 @@ public class Moteur {
 		redo.clear();
 		joueur = 1;
 		message = "Tour du joueur " + joueur;
-		j1.setScore(0);
-		j2.setScore(0);
 	}
 	
 	// Change de joueur 1 <-> 2
@@ -111,6 +109,11 @@ public class Moteur {
 			message = "Tour du joueur " + joueur;
 			return 0;
 		}
+	}
+	
+	public void initScore(){
+		j1.setScore(0);
+		j2.setScore(0);
 	}
 	
 	// Le contraire d'annuler. Renvoie 0 si tout s'est bien passé, 1 si on est à la fin de l'historique.
