@@ -6,7 +6,7 @@ import java.util.Random;
 
 /* Difficultés: 1: IA aléatoire
  * 				2: IA Aléatoire + coups gagnants/perdants
- * 				3: IA MinMax
+ * 				3: IA MiniMax
  */
 public class IA {
 	Moteur moteur;
@@ -69,14 +69,17 @@ public class IA {
 		Random R = new Random();
 		// s'il existe un coup gagnant, on en renvoie un.
 		if(! coups_gagnants.isEmpty()){
+			System.out.println("Coup Gagnant");
 			return coups_gagnants.get(R.nextInt(coups_gagnants.size()));
 		}
 		// s'il n'existe pas de coup gagnant, on renvoie un coup non perdant s'il en existe un.
 		else if( !coups_neutres.isEmpty()){
+			System.out.println("Coup neutres");
 			return coups_neutres.get(R.nextInt(coups_neutres.size()));
 		}
 		// s'il n'existe que des coups perdants, on en renvoie un.
 		else {
+			System.out.println("Coup perdant");
 			return coups_perdants.get(R.nextInt(coups_perdants.size()));
 		}
 	}
@@ -149,7 +152,7 @@ public class IA {
 		
 		if(list_possibilite.size()==1)  // SI il ne reste que la case (0;0) à jouer , alors B à perdu 
 		{
-			return -1;
+			return 0;
 		}
 		
 		for(int i=0;i<list_possibilite.size();i++)
