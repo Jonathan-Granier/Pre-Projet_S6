@@ -7,6 +7,7 @@ public class Joueur {
 	
 	public Joueur(boolean isIa) {
 		this.isIa = isIa;
+		score = 0;
 	}
 
 	public int getScore() {
