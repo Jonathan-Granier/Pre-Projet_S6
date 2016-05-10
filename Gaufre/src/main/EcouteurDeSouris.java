@@ -52,29 +52,36 @@ class EcouteurDeSouris implements MouseListener, MouseMotionListener {
     	if(moteur.joueur == 1 && moteur.j1.isIa()){
     		iaTurn(1);
     		aire.repaint();
-    	}else if((moteur.joueur == 1 && !moteur.j1.isIa())){
+    	}
+    	if((moteur.joueur == 1 && !moteur.j1.isIa())){
     		moteur.jouer_coup(p);
     		aire.repaint();
-    		try {
-				Thread.sleep(100);
-			} catch (InterruptedException e1) {
-				e1.printStackTrace();
-			}
+    		if(moteur.j2.isIa()){
+	    		iaTurn(2);
+	    		try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e1) {
+					e1.printStackTrace();
+				}
+	    		aire.repaint();
+    		}
+    	}
+    	if(moteur.joueur == 2 && moteur.j2.isIa()){
     		iaTurn(2);
     		aire.repaint();
-    	}else if(moteur.joueur == 2 && moteur.j2.isIa()){
-    		iaTurn(2);
-    		aire.repaint();
-    	}else if((moteur.joueur == 2 && !moteur.j2.isIa())){
+    	}
+    	if((moteur.joueur == 2 && !moteur.j2.isIa())){
     		moteur.jouer_coup(p);
     		aire.repaint();
-    		try {
-				Thread.sleep(100);
-			} catch (InterruptedException e1) {
-				e1.printStackTrace();
-			}
-    		iaTurn(1);
-    		aire.repaint();
+    		if(moteur.j1.isIa()){
+	    		iaTurn(1);
+	    		try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e1) {
+					e1.printStackTrace();
+				}
+	    		aire.repaint();
+    		}
     	}
     	turn.setText(moteur.message);
     	if(isPlaying){
@@ -82,12 +89,14 @@ class EcouteurDeSouris implements MouseListener, MouseMotionListener {
 		    	moteur.j1.setScore(moteur.j1.getScore()+1);
 		    	J1.setText(Integer.toString(moteur.j1.getScore()));
 		    	Replay();
+		    	moteur.nouvelle_partie();
 		    	return;
-		    		//moteur.nouvelle_partie();
+		    		//
 	    	}else if(moteur.joueur == 2 && moteur.partie_terminee()){
 	    		moteur.j2.setScore(moteur.j2.getScore()+1);
 	    		J2.setText(Integer.toString(moteur.j2.getScore()));
 	    		Replay();
+	    		moteur.nouvelle_partie();
 	    		return;
 		    		//moteur.nouvelle_partie();
 	    	}
