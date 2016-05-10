@@ -67,7 +67,7 @@ public class Test_gaufre {
 		joueur2_label.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		joueur1 = new Joueur(false,1);
-		joueur2 = new Joueur(false,2);
+		joueur2 = new Joueur(false,1);
 		
 		final JCheckBox j1 = new JCheckBox("IA");
 		j1.setSelected(false);
@@ -122,7 +122,18 @@ public class Test_gaufre {
                     joueur2.setIaLevel(i);
 	    }
 	    });
-	    
+	    ia2.addActionListener(new ActionListener(){public void actionPerformed(ActionEvent e) {
+            int i = Integer.parseInt(e.getActionCommand());
+            joueur1.setIaLevel(i);
+            joueur2.setIaLevel(i);
+		}
+		});
+	    ia3.addActionListener(new ActionListener(){public void actionPerformed(ActionEvent e) {
+            int i = Integer.parseInt(e.getActionCommand());
+            joueur1.setIaLevel(i);
+            joueur2.setIaLevel(i);
+		}
+		});    
 		JButton play = new JButton("PLAY");
 		panel.add(play, JComponent.CENTER_ALIGNMENT);
 		frame.add(panel, BorderLayout.CENTER);

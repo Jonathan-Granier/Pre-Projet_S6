@@ -78,7 +78,12 @@ class EcouteurDeSouris implements MouseListener, MouseMotionListener {
 	    		isOver();
     		}
     	}
-    	if((moteur.joueur == 2 && !moteur.j2.isIa())){
+    	else if(moteur.joueur == 1 && moteur.j1.isIa()){
+    		iaTurn(1);
+    		aire.repaint();
+    		isOver();
+    	}
+    	else if((moteur.joueur == 2 && !moteur.j2.isIa())){
     		moteur.jouer_coup(p);
     		aire.repaint();
     		isOver();
@@ -92,6 +97,11 @@ class EcouteurDeSouris implements MouseListener, MouseMotionListener {
 	    		aire.repaint();
 	    		isOver();
     		}
+    	}
+    	else if(moteur.joueur == 2 && moteur.j2.isIa()){
+    		iaTurn(2);
+    		aire.repaint();
+    		isOver();
     	}
     	
     	turn.setText(moteur.message);
