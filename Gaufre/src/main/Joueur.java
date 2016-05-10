@@ -8,7 +8,7 @@ public class Joueur {
 	
 	public Joueur(boolean isIa,int iaLevel) {
 		this.isIa = isIa;
-		iaLevel = iaLevel;
+		this.iaLevel = iaLevel;
 		score = 0;
 	}
 
