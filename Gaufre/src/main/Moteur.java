@@ -2,11 +2,10 @@ package main;
 
 import java.awt.Point;
 import java.util.ArrayList;
-import java.util.Random;
 
 public class Moteur {
 	Terrain T;
-	int joueur;
+	int joueur;		// joueur actuel : 1 ou 2
 	ArrayList<Terrain> histo,redo;
 	String message;
 	
@@ -15,9 +14,8 @@ public class Moteur {
 		histo=new ArrayList<Terrain>();
 		histo.add(T.clone());
 		redo=new ArrayList<Terrain>();
-		Random r = new Random();
-		joueur = r.nextInt(2) + 1;
-		System.out.println("Tour du joueur " + joueur);
+		joueur = 1;
+		message = "Tour du joueur " + joueur;
 	}
 	
 	// Réinitialise le terrain
@@ -30,9 +28,8 @@ public class Moteur {
 		histo.clear();
 		histo.add(T.clone());
 		redo.clear();
-		Random r = new Random();
-		joueur = r.nextInt(2) + 1;
-		System.out.println("Tour du joueur " + joueur);
+		joueur = 1;
+		message = "Tour du joueur " + joueur;
 	}
 	
 	// Change de joueur 1 <-> 2
@@ -41,45 +38,33 @@ public class Moteur {
 		else joueur=1;
 	}
 	
+	// A utiliser si partie_terminee a renvoyé vrai
+	public boolean s_est_suicide(int j){
+		return j==joueur && !T.t[0][0];
+	}
+	
 	// Détermine si la partie est terminée (il ne reste que le poison)
 	public boolean partie_terminee(){
-		return !T.t[1][0] && !T.t[0][1];
+		return (!T.t[1][0] && !T.t[0][1]) || !T.t[0][0];
 	}
 	
 	// Renvoie vrai <=> le coup donné est autorise
-	public boolean est_autorise(Point coup){
+	/*public boolean est_autorise(Point coup){
 		if(coup.x<0 || coup.x>=T.l || coup.y<0 || coup.y>=T.h) return false;
 		else return T.t[coup.x][coup.y];
-	}
+	}*/
 	
 	// Renvoie une ArrayList des coups autorises (0,0) compris
-	public ArrayList<Point> coups_possibles(){
-		ArrayList<Point> res=new ArrayList<Point>();
-		for(int i=0;i<T.l;i++){
-			for(int j=0;j<T.h;j++){
-				if(T.t[i][j]) res.add(new Point(i,j));
-			}
-		}
-		return res;
-	}
-	
-	// Renvoie une ArrayList des coups autorises (0,0) compris
-	public ArrayList<Point> coups_possibles(Terrain T){
-		ArrayList<Point> res=new ArrayList<Point>();
-		for(int i=0;i<T.l;i++){
-			for(int j=0;j<T.h;j++){
-				if(T.t[i][j]) res.add(new Point(i,j));
-			}
-		}
-		return res;
-	}
+	/*public ArrayList<Point> coups_possibles(){
+		return T.coups_possibles();
+	}*/
 	
 	// Renvoie le terrain après le coup donné. Ne modifie pas l'état actuel.
-	public Terrain consulter_coup(Point coup){
+	/*public Terrain consulter_coup(Point coup){
 		Terrain tmp = T.clone();
 		int x = coup.x;
 		int y = coup.y;
-		if(est_autorise(coup)){
+		if(T.est_autorise(coup)){
 			for(int i=x;i<tmp.l;i++){
 				for(int j=y;j<tmp.h;j++){
 					tmp.t[i][j]=false;
@@ -87,22 +72,22 @@ public class Moteur {
 			}
 		}
 		return tmp;
-	}
+	}*/
 	
 	// Joue un coup aux coordonnées donnees. Si le coup n'est pas possible, rien ne se passe et retourne 1,
 	//si la partie est terminée, retourne -1, 0 sinon.
 	public int jouer_coup(Point coup){
-		if(est_autorise(coup)){
-			T=consulter_coup(coup);
+		if(T.est_autorise(coup)){
+			T=T.consulter_coup(coup);
 			if(partie_terminee()){
-				System.out.println("Partie terminée !");
-				System.out.println("Le joueur " + joueur + " a gagné !");
+				if(s_est_suicide(joueur)) swap_joueur();
+				message = "Joueur " + joueur + " gagne!";
 				return -1;
 			}
 			histo.add(T.clone());
 			redo.clear();
 			swap_joueur();
-			System.out.println("Tour du joueur " + joueur);
+			message = "Tour du joueur " + joueur;
 			return 0;
 		}
 		else{
@@ -115,9 +100,9 @@ public class Moteur {
 		if(histo.size()==1) return 1;
 		else{
 			redo.add(histo.remove(histo.size()-1));
-			T=histo.get(histo.size()-1).clone();
+			T=histo.get(histo.size()-1);
 			swap_joueur();
-			System.out.println("Tour du joueur " + joueur);
+			message = "Tour du joueur " + joueur;
 			return 0;
 		}
 	}
@@ -129,7 +114,7 @@ public class Moteur {
 			histo.add(redo.remove(redo.size()-1));
 			T=histo.get(histo.size()-1);
 			swap_joueur();
-			System.out.println("Tour du joueur " + joueur);
+			message = "Tour du joueur " + joueur;
 			return 0;
 		}
 	}
