@@ -50,12 +50,17 @@ public class Test_gaufre {
 		joueur2.setHorizontalAlignment(SwingConstants.CENTER);
 		frame.add(joueur1,BorderLayout.WEST);
 		frame.add(joueur2,BorderLayout.EAST);
+		
+		JButton play = new JButton("PLAY");
+		//play.addActionListener(new Ecouteur("PLAY"));
 	}
 	
 	public static void game(JFrame frame){
 		Terrain terrain = new Terrain(4,6);
-		Moteur moteur = new Moteur(terrain);
+		String message = "Test";
+		Moteur moteur = new Moteur(terrain,"test");
 		//Aire de dessin
+		
 		AireDeDessin aire = new AireDeDessin(moteur);
 		aire.addMouseListener(new EcouteurDeSouris(aire,moteur));
 		

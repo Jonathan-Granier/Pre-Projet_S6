@@ -39,6 +39,8 @@ class AireDeDessin extends JComponent {
         		 }
         	 }
         
+        System.out.println(moteur.message);
+        
         drawable.setPaint(Color.red);
         int size = Math.min((width/moteur.T.l), (height/moteur.T.h));
         Point center= new Point(((width/moteur.T.l) - size)/2,((height/moteur.T.h) - size)/2);
