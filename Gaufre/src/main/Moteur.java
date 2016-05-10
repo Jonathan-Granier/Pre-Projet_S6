@@ -8,14 +8,18 @@ public class Moteur {
 	int joueur;		// joueur actuel : 1 ou 2
 	ArrayList<Terrain> histo,redo;
 	String message;
+	Joueur j1;
+	Joueur j2;
 	
-	public Moteur(Terrain T){
+	public Moteur(Terrain T,Joueur j1, Joueur j2){
 		this.T=T;
 		histo=new ArrayList<Terrain>();
 		histo.add(T.clone());
 		redo=new ArrayList<Terrain>();
 		joueur = 1;
 		message = "Tour du joueur " + joueur;
+		this.j1 = j1;
+		this.j2 = j2;
 	}
 	
 	// Réinitialise le terrain
@@ -30,6 +34,8 @@ public class Moteur {
 		redo.clear();
 		joueur = 1;
 		message = "Tour du joueur " + joueur;
+		j1.setScore(0);
+		j2.setScore(0);
 	}
 	
 	// Change de joueur 1 <-> 2

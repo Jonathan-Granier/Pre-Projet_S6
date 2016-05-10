@@ -10,24 +10,24 @@ class EcouteurDeSouris implements MouseListener, MouseMotionListener {
 	
 	AireDeDessin aire;
 	Moteur moteur;
-	Joueur joueur1;
-	Joueur joueur2;
 	JLabel J1;
 	JLabel J2;
 	JLabel turn;
 	JFrame frame;
 	boolean isPlaying;
+	IA ia1;
+	IA ia2;
 	
-	public EcouteurDeSouris(AireDeDessin aire,Moteur moteur, Joueur joueur1,Joueur joueur2,JLabel J1,JLabel J2,JLabel turn,JFrame frame){
+	public EcouteurDeSouris(AireDeDessin aire,Moteur moteur,JLabel J1,JLabel J2,JLabel turn,JFrame frame){
 		this.aire = aire;
 		this.moteur = moteur;
-		this.joueur1 = joueur1;
-		this.joueur2 = joueur2;
-		this.J1 = J1;
-		this.J2 = J2;
 		this.turn = turn;
 		this.frame = frame;
 		this.isPlaying = true;
+		this.J1 = J1;
+		this.J2 = J2;
+		this.ia1 = new IA(moteur,moteur.j1.getIaLevel());
+		this.ia2 = new IA(moteur,moteur.j2.getIaLevel());
 		turn.setText(moteur.message);
 	}
 	
@@ -39,20 +39,48 @@ class EcouteurDeSouris implements MouseListener, MouseMotionListener {
 		isPlaying = false;
 	}
 	
+	public void iaTurn(int id){
+		if (id==1)
+			moteur.jouer_coup(ia1.jouer_coup());
+		else if(id==2)
+			moteur.jouer_coup(ia2.jouer_coup());
+	}
+	
     public void mousePressed(MouseEvent e) {
     	Point p = new Point(aire.Case(e.getX(), e.getY()));
-    	moteur.jouer_coup(p);
+    	//Check if ia
+    	if(moteur.joueur == 1 && moteur.j1.isIa()){
+    		iaTurn(1);
+    	}else if((moteur.joueur == 1 && !moteur.j1.isIa())){
+    		moteur.jouer_coup(p);
+    		try {
+				Thread.sleep(500);
+			} catch (InterruptedException e1) {
+				e1.printStackTrace();
+			}
+    		iaTurn(2);
+    	}else if(moteur.joueur == 1 && moteur.j1.isIa()){
+    		iaTurn(2);
+    	}else if((moteur.joueur == 1 && !moteur.j1.isIa())){
+    		moteur.jouer_coup(p);
+    		try {
+				Thread.sleep(500);
+			} catch (InterruptedException e1) {
+				e1.printStackTrace();
+			}
+    		iaTurn(1);
+    	}
     	turn.setText(moteur.message);
     	if(isPlaying){
 	    	if(moteur.joueur == 1 && moteur.partie_terminee()){
-		    	joueur1.setScore(joueur1.getScore()+1);
-		    	J1.setText(Integer.toString(joueur1.getScore()));
+		    	moteur.j1.setScore(moteur.j1.getScore()+1);
+		    	J1.setText(Integer.toString(moteur.j1.getScore()));
 		    	Replay();
 		    	return;
 		    		//moteur.nouvelle_partie();
 	    	}else if(moteur.joueur == 2 && moteur.partie_terminee()){
-	    		joueur2.setScore(joueur2.getScore()+1);
-	    		J2.setText(Integer.toString(joueur2.getScore()));
+	    		moteur.j2.setScore(moteur.j2.getScore()+1);
+	    		J2.setText(Integer.toString(moteur.j2.getScore()));
 	    		Replay();
 	    		return;
 		    		//moteur.nouvelle_partie();

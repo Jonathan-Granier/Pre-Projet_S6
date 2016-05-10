@@ -22,7 +22,8 @@ public class Test_gaufre {
 	static JFrame frame;
 	static Joueur joueur1;
 	static Joueur joueur2;
-	
+	static JLabel J1_score;
+	static JLabel J2_score;
 
 	
 	public static JMenu menuPrincipal(Moteur moteur,AireDeDessin aire) {
@@ -30,20 +31,20 @@ public class Test_gaufre {
         	JMenuItem item;
 		principal = new JMenu("Option");
 		item = new JMenuItem("Nouveaux");
-		item.addActionListener(new Ecouteur("Nouveaux",moteur,aire));
+		item.addActionListener(new Ecouteur("Nouveaux",moteur,aire,J1_score,J2_score));
 		principal.add(item);
 		item = new JMenuItem("Sauver");
-		item.addActionListener(new Ecouteur("Sauver",moteur,aire));
+		item.addActionListener(new Ecouteur("Sauver",moteur,aire,J1_score,J2_score));
 		principal.add(item);
 		item = new JMenuItem("Charger");
-		item.addActionListener(new Ecouteur("Charger",moteur,aire));
+		item.addActionListener(new Ecouteur("Charger",moteur,aire,J1_score,J2_score));
 		principal.add(item);
 		return principal;
 	}
 
 	public static JMenuBar menu(Moteur moteur,AireDeDessin aire) {
 		JMenuBar barre;
-		JMenu principal, edition;
+		JMenu principal;
 
         barre = new JMenuBar();
 		principal = menuPrincipal(moteur,aire);
@@ -63,8 +64,8 @@ public class Test_gaufre {
 		
 		
 		
-		joueur1 = new Joueur(true);
-		joueur2 = new Joueur(true);
+		joueur1 = new Joueur(false,1);
+		joueur2 = new Joueur(true,1);
 		
 		JButton play = new JButton("PLAY");
 		frame.add(play, BorderLayout.CENTER);
@@ -76,9 +77,8 @@ public class Test_gaufre {
 		frame = new JFrame("Gauffre");
 		frame.setSize(WIDTH, HEIGHT);
 		frame.setVisible(true);
-		System.out.println("test");
 		Terrain terrain = new Terrain(4,6);
-		Moteur moteur = new Moteur(terrain);
+		Moteur moteur = new Moteur(terrain,joueur1,joueur2);
 		
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(6,1,2,0));
@@ -89,26 +89,26 @@ public class Test_gaufre {
 		
 		JLabel J1 = new JLabel("Joueur 1");
 		J1.setHorizontalAlignment(SwingConstants.CENTER);
-		JLabel J1_score = new JLabel(Integer.toString(joueur1.getScore())); // To be implemented
+		J1_score = new JLabel(Integer.toString(joueur1.getScore())); // To be implemented
 		J1_score.setHorizontalAlignment(SwingConstants.CENTER);
 		JLabel J2 = new JLabel("Joueur 2");
 		J2.setHorizontalAlignment(SwingConstants.CENTER);
-		JLabel J2_score = new JLabel(Integer.toString(joueur2.getScore())); // To be implemented
+		J2_score = new JLabel(Integer.toString(joueur2.getScore())); // To be implemented
 		J2_score.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		
 		//Aire de dessin
 		
 		AireDeDessin aire = new AireDeDessin(moteur);
-		aire.addMouseListener(new EcouteurDeSouris(aire,moteur,joueur1,joueur2,J1_score,J2_score,turn,frame));
+		aire.addMouseListener(new EcouteurDeSouris(aire,moteur,J1_score,J2_score,turn,frame));
 		
 
 		
 		JButton undo = new JButton("Annuler");
-		undo.addActionListener(new Ecouteur("Annuler",moteur,aire));
+		undo.addActionListener(new Ecouteur("Annuler",moteur,aire,J1_score,J2_score));
 
 		JButton redo = new JButton("Refaire");
-		redo.addActionListener(new Ecouteur("Refaire",moteur,aire));
+		redo.addActionListener(new Ecouteur("Refaire",moteur,aire,J1_score,J2_score));
 		
 		panel.add(align);
 		panel.add(turn);

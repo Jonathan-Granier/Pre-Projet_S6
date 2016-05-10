@@ -4,10 +4,16 @@ public class Joueur {
 
 	private int score;
 	private boolean isIa;
+	private int iaLevel;
 	
-	public Joueur(boolean isIa) {
+	public Joueur(boolean isIa,int iaLevel) {
 		this.isIa = isIa;
+		iaLevel = iaLevel;
 		score = 0;
+	}
+
+	public int getIaLevel() {
+		return iaLevel;
 	}
 
 	public int getScore() {
