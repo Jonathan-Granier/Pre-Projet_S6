@@ -90,24 +90,14 @@ public class IA {
 		ArrayList<Point> list_coups = new ArrayList();
 		ArrayList<Point> list_possibilite = moteur.T.coups_possibles();
 		
-		int max_val = -1000;
-		int val;
-		
 		for(int i=0;i<list_possibilite.size();i++)
 		{
 			Point p_courant = list_possibilite.get(i);
 			
 			
 			Terrain tmp = moteur.T.consulter_coup(p_courant);
-			val = minimax_Min_B(tmp);
-			if (val == max_val)
+			if( minimax_Min_B(tmp));
 			{
-				list_coups.add(p_courant);
-			}
-			else if(val > max_val)
-			{
-				max_val = val;
-				list_coups = new ArrayList();
 				list_coups.add(p_courant);
 			}
 		}
@@ -116,16 +106,15 @@ public class IA {
 	}
 	
 	// C'est à B de jouer , si il doit jouer forcement sur la case (0;0) , on renvoi 1 , sinon on renvoi le maximum du prochain coup de A
-	private int minimax_Min_B(Terrain t_courant)
+	private boolean minimax_Min_B(Terrain t_courant)
 	{
 		ArrayList<Point> list_possibilite = t_courant.coups_possibles();
-		int val;
-		int min_val = 1000;
+		boolean val= true;
 		
 		
 		if(list_possibilite.size()==1)  // SI il ne reste que la case (0;0) à jouer , alors B à perdu 
 		{
-			return 1;
+			return true;
 		}
 		
 		for(int i=0;i<list_possibilite.size();i++)
@@ -133,25 +122,21 @@ public class IA {
 			Point p_courant = list_possibilite.get(i);
 			
 			Terrain tmp = t_courant.consulter_coup(p_courant);
-			val = minimax_Max_A(tmp);
-			if (val < min_val)
-			{
-				min_val= val;
-			}
+			val = val && minimax_Max_A(tmp);
+			
 		}			
-		return min_val;
+		return val;
 	}
 	
 	// C'est à A de jouer , si il doit jouer forcement sur la case (0;0) , on renvoi -1 , sinon on renvoi le minimum du prochain coup de B
-	private int minimax_Max_A(Terrain t_courant)
+	private boolean minimax_Max_A(Terrain t_courant)
 	{
 		ArrayList<Point> list_possibilite = t_courant.coups_possibles();
-		int val;
-		int max_val = -1000;
+		boolean val = false;
 		
 		if(list_possibilite.size()==1)  // SI il ne reste que la case (0;0) à jouer , alors B à perdu 
 		{
-			return 0;
+			return false;
 		}
 		
 		for(int i=0;i<list_possibilite.size();i++)
@@ -159,17 +144,12 @@ public class IA {
 			Point p_courant = list_possibilite.get(i);
 			
 			Terrain tmp = t_courant.consulter_coup(p_courant);
-			val = minimax_Min_B(tmp);
-			if (val > max_val)
-			{
-				max_val= val;
-			}
+			val = (val || minimax_Min_B(tmp));
+			
 		}			
 		
-		return max_val;
+		return val;
 	}
-	
-	
 	
 	/*
 	 Un coup est perdant si après celui-ci
@@ -214,15 +194,15 @@ public class IA {
 		}
 		
 		// Après ce coup, on va se retrouver dans une situation 1-1-1
-		else if(!moteur.T.t[0][2] && !moteur.T.t[1][1] && coup_egal(coup,2,0))
+		else if(!moteur.T.t[0][2] && !moteur.T.t[1][1] && coup_egal(coup,2,0) && moteur.T.t[0][1] && moteur.T.t[1][0])
 		{
 			return true;
 		}
-		else if (!moteur.T.t[0][2] && coup_egal(coup,1,1) && !moteur.T.t[2][0])
+		else if (!moteur.T.t[0][2] && coup_egal(coup,1,1) && !moteur.T.t[2][0] && moteur.T.t[0][1] && moteur.T.t[1][0])
 		{
 			return true;
 		}
-		else if (coup_egal(coup,0,2) && !moteur.T.t[1][1] && !moteur.T.t[2][0])
+		else if (coup_egal(coup,0,2) && !moteur.T.t[1][1] && !moteur.T.t[2][0] && moteur.T.t[0][1] && moteur.T.t[1][0])
 		{
 			return true;
 		}
