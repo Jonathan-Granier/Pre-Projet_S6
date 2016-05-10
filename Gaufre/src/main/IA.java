@@ -18,7 +18,7 @@ public class IA {
 		this.difficulte = difficulte;
 	}
 	
-	// Determine le prochain coup à jouer et le renvoie.
+	// Determine le prochain coup à jouer et le renvoie. Si aucun coup n'est possible , renvoi null;
 	public Point jouer_coup(){
 		System.out.println("IA: On me demande de jouer un coup");
 		switch (difficulte)
@@ -38,6 +38,10 @@ public class IA {
 	private Point jouer_coup_aleatoire(){
 		Random R = new Random();
 		ArrayList<Point> list_possibilite = moteur.T.coups_possibles();
+		if(list_possibilite.isEmpty())
+		{
+			return null;
+		}
 		Point coup = list_possibilite.get(R.nextInt(list_possibilite.size()));
 		return coup;
 	}
@@ -46,6 +50,10 @@ public class IA {
 	private Point jouer_coup_perdant_gagnant()
 	{
 		ArrayList <Point> list_coups = moteur.T.coups_possibles();
+		if(list_coups.isEmpty())
+		{
+			return null;
+		}
 		ArrayList <Point> coups_gagnants = new ArrayList();
 		ArrayList <Point> coups_perdants = new ArrayList();
 		ArrayList <Point> coups_neutres = new ArrayList();
@@ -88,7 +96,12 @@ public class IA {
 	{
 		Random R = new Random();
 		ArrayList<Point> list_coups = new ArrayList();
+		
 		ArrayList<Point> list_possibilite = moteur.T.coups_possibles();
+		if(list_possibilite.isEmpty())
+		{
+			return null;
+		}
 		
 		for(int i=0;i<list_possibilite.size();i++)
 		{
