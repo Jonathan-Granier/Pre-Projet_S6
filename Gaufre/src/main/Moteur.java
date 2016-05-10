@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class Moteur {
 	Terrain T;
-	int joueur;
+	int joueur;		// joueur actuel : 1 ou 2
 	ArrayList<Terrain> histo,redo;
 	String message;
 	
@@ -100,7 +100,7 @@ public class Moteur {
 		if(histo.size()==1) return 1;
 		else{
 			redo.add(histo.remove(histo.size()-1));
-			T=histo.get(histo.size()-1).clone();
+			T=histo.get(histo.size()-1);
 			swap_joueur();
 			message = "Tour du joueur " + joueur;
 			return 0;
