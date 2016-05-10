@@ -8,9 +8,21 @@ public class Moteur {
 	Terrain T;
 	int joueur;
 	ArrayList<Terrain> histo,redo;
+	String message;
 	
 	public Moteur(Terrain T){
 		this.T=T;
+		histo=new ArrayList<Terrain>();
+		histo.add(T.clone());
+		redo=new ArrayList<Terrain>();
+		Random r = new Random();
+		joueur = r.nextInt(2) + 1;
+	}
+	
+	public Moteur(Terrain T, String message){
+		this.T=T;
+		this.message = message;
+		this.message = "Coucou";
 		histo=new ArrayList<Terrain>();
 		histo.add(T.clone());
 		redo=new ArrayList<Terrain>();
