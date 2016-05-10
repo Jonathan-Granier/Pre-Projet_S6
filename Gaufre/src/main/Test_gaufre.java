@@ -63,7 +63,7 @@ public class Test_gaufre {
 		frame.add(joueur2_label,BorderLayout.EAST);
 		
 		joueur1 = new Joueur(false,1);
-		joueur2 = new Joueur(false,2);
+		joueur2 = new Joueur(true,2);
 		
 		JButton play = new JButton("PLAY");
 		frame.add(play, BorderLayout.CENTER);

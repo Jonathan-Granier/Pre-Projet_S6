@@ -83,12 +83,14 @@ class EcouteurDeSouris implements MouseListener, MouseMotionListener {
 	    		aire.repaint();
     		}
     	}
+    	
     	turn.setText(moteur.message);
     	if(isPlaying){
 	    	if(moteur.joueur == 1 && moteur.partie_terminee()){
 		    	moteur.j1.setScore(moteur.j1.getScore()+1);
 		    	J1.setText(Integer.toString(moteur.j1.getScore()));
 		    	Replay();
+		    	aire.repaint();
 		    	moteur.nouvelle_partie();
 		    	return;
 		    		//
@@ -96,6 +98,7 @@ class EcouteurDeSouris implements MouseListener, MouseMotionListener {
 	    		moteur.j2.setScore(moteur.j2.getScore()+1);
 	    		J2.setText(Integer.toString(moteur.j2.getScore()));
 	    		Replay();
+	    		aire.repaint();
 	    		moteur.nouvelle_partie();
 	    		return;
 		    		//moteur.nouvelle_partie();
