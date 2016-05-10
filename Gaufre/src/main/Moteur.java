@@ -17,17 +17,7 @@ public class Moteur {
 		redo=new ArrayList<Terrain>();
 		Random r = new Random();
 		joueur = r.nextInt(2) + 1;
-	}
-	
-	public Moteur(Terrain T, String message){
-		this.T=T;
-		this.message = message;
-		message = "Coucou";
-		histo=new ArrayList<Terrain>();
-		histo.add(T.clone());
-		redo=new ArrayList<Terrain>();
-		Random r = new Random();
-		joueur = r.nextInt(2) + 1;
+		System.out.println("Tour du joueur " + joueur);
 	}
 	
 	// Réinitialise le terrain
@@ -42,6 +32,7 @@ public class Moteur {
 		redo.clear();
 		Random r = new Random();
 		joueur = r.nextInt(2) + 1;
+		System.out.println("Tour du joueur " + joueur);
 	}
 	
 	// Change de joueur 1 <-> 2
@@ -87,13 +78,19 @@ public class Moteur {
 		return tmp;
 	}
 	
-	// Joue un coup aux coordonnées donnees. Si le coup n'est pas possible, rien ne se passe et retourne 1, 0 sinon.
+	// Joue un coup aux coordonnées donnees. Si le coup n'est pas possible, rien ne se passe et retourne 1,
+	//si la partie est terminée, retourne -1, 0 sinon.
 	public int jouer_coup(Point coup){
 		if(est_autorise(coup)){
 			T=consulter_coup(coup);
+			if(partie_terminee()){
+				System.out.println("Partie terminée !");
+				return -1;
+			}
 			histo.add(T.clone());
 			redo.clear();
 			swap_joueur();
+			System.out.println("Tour du joueur " + joueur);
 			return 0;
 		}
 		else{
@@ -108,6 +105,7 @@ public class Moteur {
 			redo.add(histo.remove(histo.size()-1));
 			T=histo.get(histo.size()-1).clone();
 			swap_joueur();
+			System.out.println("Tour du joueur " + joueur);
 			return 0;
 		}
 	}
@@ -119,6 +117,7 @@ public class Moteur {
 			histo.add(redo.remove(redo.size()-1));
 			T=histo.get(histo.size()-1);
 			swap_joueur();
+			System.out.println("Tour du joueur " + joueur);
 			return 0;
 		}
 	}
