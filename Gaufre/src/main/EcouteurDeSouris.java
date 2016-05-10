@@ -89,19 +89,13 @@ class EcouteurDeSouris implements MouseListener, MouseMotionListener {
 	    	if(moteur.joueur == 1 && moteur.partie_terminee()){
 		    	moteur.j1.setScore(moteur.j1.getScore()+1);
 		    	J1.setText(Integer.toString(moteur.j1.getScore()));
-		    	Replay();
-		    	aire.repaint();
+		    	//Replay();
 		    	moteur.nouvelle_partie();
-		    	return;
-		    		//
 	    	}else if(moteur.joueur == 2 && moteur.partie_terminee()){
 	    		moteur.j2.setScore(moteur.j2.getScore()+1);
 	    		J2.setText(Integer.toString(moteur.j2.getScore()));
-	    		Replay();
-	    		aire.repaint();
+	    		//Replay();
 	    		moteur.nouvelle_partie();
-	    		return;
-		    		//moteur.nouvelle_partie();
 	    	}
     	}
     	
