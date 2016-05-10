@@ -227,4 +227,44 @@ public class IA {
 	{
 		return coup.x == x && coup.y ==y;
 	}
+	
+	private int eval_Heuristique(Terrain t)
+	{
+		if(!t.t[1][1])
+		{
+			// on vérifie que les deux branches sont de la même longueure
+			int x_max = 0;
+			int y_max = 0;
+			while( x_max < t.h && t.t[x_max][0])
+				x_max++;
+			while( y_max < t.l && t.t[0][y_max])
+				y_max++;
+			if( x_max == y_max)
+			{
+				// on retourne moins l'infini si les deux branches sont de la même longueur.
+				return -1;
+			}
+			else if( x_max != y_max)
+			{
+				// on retourne plus l'infini si les deux branches sont de longueur différentes.
+				return +1;
+			}
+		}
+		else if(t.t[1][1])
+		{
+			int x_max = 0;
+			int y_max = 0;
+			while( x_max < t.h && t.t[x_max][0])
+				x_max++;
+			while( y_max < t.l && t.t[0][y_max])
+				y_max++;
+			if( x_max == y_max)
+			{
+				// on retourne plus l'infini si les deux branches sont de la même longueur.
+				return 1;
+			}
+		}
+		
+		return 0;
+	}
 }
