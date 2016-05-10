@@ -22,7 +22,7 @@ public class Moteur {
 	public Moteur(Terrain T, String message){
 		this.T=T;
 		this.message = message;
-		this.message = "Coucou";
+		message = "Coucou";
 		histo=new ArrayList<Terrain>();
 		histo.add(T.clone());
 		redo=new ArrayList<Terrain>();
