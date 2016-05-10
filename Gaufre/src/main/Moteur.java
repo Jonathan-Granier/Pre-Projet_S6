@@ -98,7 +98,7 @@ public class Moteur {
 		if(est_autorise(coup)){
 			T=consulter_coup(coup);
 			if(partie_terminee()){
-				message = "Partie terminée !\nLe joueur " + joueur + " a gagné !";
+				message = "Partie termine ! Le joueur " + joueur + " a gagne !";
 				return -1;
 			}
 			histo.add(T.clone());
