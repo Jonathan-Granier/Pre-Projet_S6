@@ -189,6 +189,10 @@ public class IA {
 		{
 			return true;
 		}
+		else if (coup_egal(coup, 0,0))
+		{
+			return true;
+		}
 		return false;
 	}
 	
