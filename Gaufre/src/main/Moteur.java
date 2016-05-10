@@ -63,6 +63,17 @@ public class Moteur {
 		return res;
 	}
 	
+	// Renvoie une ArrayList des coups autorises (0,0) compris
+	public ArrayList<Point> coups_possibles(Terrain T){
+		ArrayList<Point> res=new ArrayList<Point>();
+		for(int i=0;i<T.l;i++){
+			for(int j=0;j<T.h;j++){
+				if(T.t[i][j]) res.add(new Point(i,j));
+			}
+		}
+		return res;
+	}
+	
 	// Renvoie le terrain après le coup donné. Ne modifie pas l'état actuel.
 	public Terrain consulter_coup(Point coup){
 		Terrain tmp = T.clone();
@@ -85,6 +96,7 @@ public class Moteur {
 			T=consulter_coup(coup);
 			if(partie_terminee()){
 				System.out.println("Partie terminée !");
+				System.out.println("Le joueur " + joueur + " a gagné !");
 				return -1;
 			}
 			histo.add(T.clone());
