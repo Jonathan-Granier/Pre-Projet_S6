@@ -194,6 +194,7 @@ public class IA {
 		}
 		
 		// Après ce coup, on va se retrouver dans une situation 1-1-1
+		// Il faut vérifier que les cases internes sont encore valides.
 		else if(!moteur.T.t[0][2] && !moteur.T.t[1][1] && coup_egal(coup,2,0) && moteur.T.t[0][1] && moteur.T.t[1][0])
 		{
 			return true;
