@@ -2,7 +2,6 @@ package main;
 
 import java.awt.Point;
 import java.util.ArrayList;
-import java.util.Random;
 
 public class Moteur {
 	Terrain T;
