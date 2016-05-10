@@ -88,7 +88,7 @@ public class Test_gaufre {
 		J2.setHorizontalAlignment(SwingConstants.CENTER);
 		JLabel J2_score = new JLabel(Integer.toString(joueur2.getScore())); // To be implemented
 		J2_score.setHorizontalAlignment(SwingConstants.CENTER);
-		
+		//r
 		
 		//Aire de dessin
 		
