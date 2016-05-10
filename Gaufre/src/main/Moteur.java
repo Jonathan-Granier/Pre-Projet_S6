@@ -8,15 +8,13 @@ public class Moteur {
 	Terrain T;
 	int joueur;
 	ArrayList<Terrain> histo,redo;
-	String message;
 	
 	public Moteur(Terrain T){
 		this.T=T;
 		histo=new ArrayList<Terrain>();
 		histo.add(T.clone());
 		redo=new ArrayList<Terrain>();
-		Random r = new Random();
-		joueur = r.nextInt(2) + 1;
+		joueur = 1;
 		System.out.println("Tour du joueur " + joueur);
 	}
 	
@@ -30,8 +28,7 @@ public class Moteur {
 		histo.clear();
 		histo.add(T.clone());
 		redo.clear();
-		Random r = new Random();
-		joueur = r.nextInt(2) + 1;
+		joueur = 1;
 		System.out.println("Tour du joueur " + joueur);
 	}
 	
@@ -41,9 +38,14 @@ public class Moteur {
 		else joueur=1;
 	}
 	
+	// A utiliser si partie_terminee a renvoyé vrai
+	public boolean s_est_suicide(int j){
+		return j==joueur && !T.t[0][0];
+	}
+	
 	// Détermine si la partie est terminée (il ne reste que le poison)
 	public boolean partie_terminee(){
-		return !T.t[1][0] && !T.t[0][1];
+		return (!T.t[1][0] && !T.t[0][1]) || !T.t[0][0];
 	}
 	
 	// Renvoie vrai <=> le coup donné est autorise
