@@ -80,6 +80,11 @@ public class Test_gaufre {
 		
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(6,1,2,0));
+		JLabel turn = new JLabel("");
+		turn.setHorizontalAlignment(SwingConstants.CENTER);
+		JLabel align = new JLabel("");
+		align.setHorizontalAlignment(SwingConstants.CENTER);
+		
 		JLabel J1 = new JLabel("Joueur 1");
 		J1.setHorizontalAlignment(SwingConstants.CENTER);
 		JLabel J1_score = new JLabel(Integer.toString(joueur1.getScore())); // To be implemented
@@ -88,12 +93,12 @@ public class Test_gaufre {
 		J2.setHorizontalAlignment(SwingConstants.CENTER);
 		JLabel J2_score = new JLabel(Integer.toString(joueur2.getScore())); // To be implemented
 		J2_score.setHorizontalAlignment(SwingConstants.CENTER);
-		//r
+		
 		
 		//Aire de dessin
 		
 		AireDeDessin aire = new AireDeDessin(moteur);
-		aire.addMouseListener(new EcouteurDeSouris(aire,moteur,joueur1,joueur2,J1_score,J2_score));
+		aire.addMouseListener(new EcouteurDeSouris(aire,moteur,joueur1,joueur2,J1_score,J2_score,turn));
 		
 
 		
@@ -103,6 +108,8 @@ public class Test_gaufre {
 		JButton redo = new JButton("Refaire");
 		redo.addActionListener(new Ecouteur("Refaire",moteur,aire));
 		
+		panel.add(align);
+		panel.add(turn);
 		panel.add(J1);
 		panel.add(J1_score);
 		panel.add(J2);
