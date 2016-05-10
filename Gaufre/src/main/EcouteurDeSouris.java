@@ -46,12 +46,27 @@ class EcouteurDeSouris implements MouseListener, MouseMotionListener {
 			moteur.jouer_coup(ia2.jouer_coup());
 	}
 	
+	public void isOver(){
+    	if(moteur.joueur == 1 && moteur.partie_terminee()){
+	    	moteur.j1.setScore(moteur.j1.getScore()+1);
+	    	J1.setText(Integer.toString(moteur.j1.getScore()));
+	    	//Replay();
+	    	moteur.nouvelle_partie();
+    	}else if(moteur.joueur == 2 && moteur.partie_terminee()){
+    		moteur.j2.setScore(moteur.j2.getScore()+1);
+    		J2.setText(Integer.toString(moteur.j2.getScore()));
+    		//Replay();
+    		moteur.nouvelle_partie();
+    	}
+	}
+	
     public void mousePressed(MouseEvent e) {
     	Point p = new Point(aire.Case(e.getX(), e.getY()));
     	//Check if ia
     	if((moteur.joueur == 1 && !moteur.j1.isIa())){
     		moteur.jouer_coup(p);
     		aire.repaint();
+    		isOver();
     		if(moteur.j2.isIa()){
 	    		iaTurn(2);
 	    		try {
@@ -60,11 +75,13 @@ class EcouteurDeSouris implements MouseListener, MouseMotionListener {
 					e1.printStackTrace();
 				}
 	    		aire.repaint();
+	    		isOver();
     		}
     	}
     	if((moteur.joueur == 2 && !moteur.j2.isIa())){
     		moteur.jouer_coup(p);
     		aire.repaint();
+    		isOver();
     		if(moteur.j1.isIa()){
 	    		iaTurn(1);
 	    		try {
@@ -73,23 +90,12 @@ class EcouteurDeSouris implements MouseListener, MouseMotionListener {
 					e1.printStackTrace();
 				}
 	    		aire.repaint();
+	    		isOver();
     		}
     	}
     	
     	turn.setText(moteur.message);
-    	if(isPlaying){
-	    	if(moteur.joueur == 1 && moteur.partie_terminee()){
-		    	moteur.j1.setScore(moteur.j1.getScore()+1);
-		    	J1.setText(Integer.toString(moteur.j1.getScore()));
-		    	//Replay();
-		    	moteur.nouvelle_partie();
-	    	}else if(moteur.joueur == 2 && moteur.partie_terminee()){
-	    		moteur.j2.setScore(moteur.j2.getScore()+1);
-	    		J2.setText(Integer.toString(moteur.j2.getScore()));
-	    		//Replay();
-	    		moteur.nouvelle_partie();
-	    	}
-    	}
+  
     	
     }
 
