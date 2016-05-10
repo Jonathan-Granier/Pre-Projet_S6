@@ -3,6 +3,8 @@ package main;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -15,6 +17,12 @@ import javax.swing.SwingConstants;
 
 public class Test_gaufre {
 
+	final static int WIDTH = 500;
+	final static int HEIGHT = 500;
+	static JFrame frame;
+	static Joueur joueur1;
+	static Joueur joueur2;
+	
 	public static JMenu menuPrincipal(Moteur moteur,AireDeDessin aire) {
 		JMenu principal;
         	JMenuItem item;
@@ -42,23 +50,33 @@ public class Test_gaufre {
 		return barre;
 	}
 	
-	public static void titleScreen(JFrame frame){
+	public static void titleScreen(){
 		JPanel panel = new JPanel();
-		JLabel joueur1 = new JLabel ("Joueur1");
-		joueur1.setHorizontalAlignment(SwingConstants.CENTER);
-		JLabel joueur2 = new JLabel ("Joueur2");
-		joueur2.setHorizontalAlignment(SwingConstants.CENTER);
-		frame.add(joueur1,BorderLayout.WEST);
-		frame.add(joueur2,BorderLayout.EAST);
+		JLabel joueur1_label = new JLabel ("Joueur1");
+		joueur1_label.setHorizontalAlignment(SwingConstants.CENTER);
+		JLabel joueur2_label = new JLabel ("Joueur2");
+		joueur2_label.setHorizontalAlignment(SwingConstants.CENTER);
+		frame.add(joueur1_label,BorderLayout.WEST);
+		frame.add(joueur2_label,BorderLayout.EAST);
+		
+		
+		
+		joueur1 = new Joueur(true);
+		joueur2 = new Joueur(true);
 		
 		JButton play = new JButton("PLAY");
-		//play.addActionListener(new Ecouteur("PLAY"));
+		frame.add(play, BorderLayout.CENTER);
+		play.addActionListener(new ActionListener(){public void actionPerformed(ActionEvent e) {game();}});
 	}
 	
-	public static void game(JFrame frame){
+	public static void game(){
+		frame.setVisible(false);
+		frame = new JFrame("Gauffre");
+		frame.setSize(WIDTH, HEIGHT);
+		frame.setVisible(true);
+		System.out.println("test");
 		Terrain terrain = new Terrain(4,6);
-		String message = "Test";
-		Moteur moteur = new Moteur(terrain,"test");
+		Moteur moteur = new Moteur(terrain);
 		//Aire de dessin
 		
 		AireDeDessin aire = new AireDeDessin(moteur);
@@ -68,11 +86,11 @@ public class Test_gaufre {
 		panel.setLayout(new GridLayout(6,1,2,0));
 		JLabel J1 = new JLabel("Joueur 1");
 		J1.setHorizontalAlignment(SwingConstants.CENTER);
-		JLabel J1_score = new JLabel("0"); // To be implemented
+		JLabel J1_score = new JLabel(Integer.toString(joueur1.getScore())); // To be implemented
 		J1_score.setHorizontalAlignment(SwingConstants.CENTER);
 		JLabel J2 = new JLabel("Joueur 2");
 		J2.setHorizontalAlignment(SwingConstants.CENTER);
-		JLabel J2_score = new JLabel("0"); // To be implemented
+		JLabel J2_score = new JLabel(Integer.toString(joueur2.getScore())); // To be implemented
 		J2_score.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		JButton undo = new JButton("Annuler");
@@ -97,11 +115,11 @@ public class Test_gaufre {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
-		JFrame frame = new JFrame("Gauffre");
+		frame = new JFrame("Gauffre");
 		
-		game(frame);
+		titleScreen();
 		
-		frame.setSize(500, 500);
+		frame.setSize(WIDTH, HEIGHT);
 		frame.setVisible(true);
 		
 		
