@@ -51,24 +51,30 @@ class EcouteurDeSouris implements MouseListener, MouseMotionListener {
     	//Check if ia
     	if(moteur.joueur == 1 && moteur.j1.isIa()){
     		iaTurn(1);
+    		aire.repaint();
     	}else if((moteur.joueur == 1 && !moteur.j1.isIa())){
     		moteur.jouer_coup(p);
+    		aire.repaint();
     		try {
-				Thread.sleep(500);
+				Thread.sleep(100);
 			} catch (InterruptedException e1) {
 				e1.printStackTrace();
 			}
     		iaTurn(2);
-    	}else if(moteur.joueur == 1 && moteur.j1.isIa()){
+    		aire.repaint();
+    	}else if(moteur.joueur == 2 && moteur.j2.isIa()){
     		iaTurn(2);
-    	}else if((moteur.joueur == 1 && !moteur.j1.isIa())){
+    		aire.repaint();
+    	}else if((moteur.joueur == 2 && !moteur.j2.isIa())){
     		moteur.jouer_coup(p);
+    		aire.repaint();
     		try {
-				Thread.sleep(500);
+				Thread.sleep(100);
 			} catch (InterruptedException e1) {
 				e1.printStackTrace();
 			}
     		iaTurn(1);
+    		aire.repaint();
     	}
     	turn.setText(moteur.message);
     	if(isPlaying){
@@ -86,7 +92,7 @@ class EcouteurDeSouris implements MouseListener, MouseMotionListener {
 		    		//moteur.nouvelle_partie();
 	    	}
     	}
-    	aire.repaint();
+    	
     }
 
 	@Override
