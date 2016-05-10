@@ -1,5 +1,7 @@
 package main;
 
+import java.awt.Point;
+import java.util.ArrayList;
 
 public class Terrain {
 	boolean [][] t;
@@ -40,5 +42,37 @@ public class Terrain {
 			System.out.println();
 		}
 		System.out.println();
+	}
+	
+	// Renvoie vrai <=> le coup donné est autorise
+	public boolean est_autorise(Point coup){
+		if(coup.x<0 || coup.x>=l || coup.y<0 || coup.y>=h) return false;
+		else return t[coup.x][coup.y];
+	}
+	
+	// Renvoie une ArrayList des coups autorises (0,0) compris
+	public ArrayList<Point> coups_possibles(){
+		ArrayList<Point> res=new ArrayList<Point>();
+		for(int i=0;i<l;i++){
+			for(int j=0;j<h;j++){
+				if(t[i][j]) res.add(new Point(i,j));
+			}
+		}
+		return res;
+	}
+	
+	// Renvoie le terrain après le coup donné. Ne modifie pas l'état actuel.
+	public Terrain consulter_coup(Point coup){
+		Terrain tmp = this.clone();
+		int x = coup.x;
+		int y = coup.y;
+		if(est_autorise(coup)){
+			for(int i=x;i<tmp.l;i++){
+				for(int j=y;j<tmp.h;j++){
+					tmp.t[i][j]=false;
+				}
+			}
+		}
+		return tmp;
 	}
 }

@@ -50,39 +50,22 @@ public class Moteur {
 	}
 	
 	// Renvoie vrai <=> le coup donné est autorise
-	public boolean est_autorise(Point coup){
+	/*public boolean est_autorise(Point coup){
 		if(coup.x<0 || coup.x>=T.l || coup.y<0 || coup.y>=T.h) return false;
 		else return T.t[coup.x][coup.y];
-	}
+	}*/
 	
 	// Renvoie une ArrayList des coups autorises (0,0) compris
-	public ArrayList<Point> coups_possibles(){
-		ArrayList<Point> res=new ArrayList<Point>();
-		for(int i=0;i<T.l;i++){
-			for(int j=0;j<T.h;j++){
-				if(T.t[i][j]) res.add(new Point(i,j));
-			}
-		}
-		return res;
-	}
-	
-	// Renvoie une ArrayList des coups autorises (0,0) compris
-	public ArrayList<Point> coups_possibles(Terrain T){
-		ArrayList<Point> res=new ArrayList<Point>();
-		for(int i=0;i<T.l;i++){
-			for(int j=0;j<T.h;j++){
-				if(T.t[i][j]) res.add(new Point(i,j));
-			}
-		}
-		return res;
-	}
+	/*public ArrayList<Point> coups_possibles(){
+		return T.coups_possibles();
+	}*/
 	
 	// Renvoie le terrain après le coup donné. Ne modifie pas l'état actuel.
-	public Terrain consulter_coup(Point coup){
+	/*public Terrain consulter_coup(Point coup){
 		Terrain tmp = T.clone();
 		int x = coup.x;
 		int y = coup.y;
-		if(est_autorise(coup)){
+		if(T.est_autorise(coup)){
 			for(int i=x;i<tmp.l;i++){
 				for(int j=y;j<tmp.h;j++){
 					tmp.t[i][j]=false;
@@ -90,13 +73,13 @@ public class Moteur {
 			}
 		}
 		return tmp;
-	}
+	}*/
 	
 	// Joue un coup aux coordonnées donnees. Si le coup n'est pas possible, rien ne se passe et retourne 1,
 	//si la partie est terminée, retourne -1, 0 sinon.
 	public int jouer_coup(Point coup){
-		if(est_autorise(coup)){
-			T=consulter_coup(coup);
+		if(T.est_autorise(coup)){
+			T=T.consulter_coup(coup);
 			if(partie_terminee()){
 				if(s_est_suicide(joueur)) swap_joueur();
 				message = "Joueur " + joueur + " gagne!";
