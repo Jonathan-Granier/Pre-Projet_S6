@@ -151,8 +151,6 @@ public class IA {
 		return val;
 	}
 	
-	
-	
 	/*
 	 Un coup est perdant si après celui-ci
 	 l'adversaire se retrouve avec un terrain d'une seule ligne/colonne
