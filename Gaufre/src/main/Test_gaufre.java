@@ -77,10 +77,6 @@ public class Test_gaufre {
 		System.out.println("test");
 		Terrain terrain = new Terrain(4,6);
 		Moteur moteur = new Moteur(terrain);
-		//Aire de dessin
-		
-		AireDeDessin aire = new AireDeDessin(moteur);
-		aire.addMouseListener(new EcouteurDeSouris(aire,moteur));
 		
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(6,1,2,0));
@@ -92,6 +88,14 @@ public class Test_gaufre {
 		J2.setHorizontalAlignment(SwingConstants.CENTER);
 		JLabel J2_score = new JLabel(Integer.toString(joueur2.getScore())); // To be implemented
 		J2_score.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		
+		//Aire de dessin
+		
+		AireDeDessin aire = new AireDeDessin(moteur);
+		aire.addMouseListener(new EcouteurDeSouris(aire,moteur,joueur1,joueur2,J1_score,J2_score));
+		
+
 		
 		JButton undo = new JButton("Annuler");
 		undo.addActionListener(new Ecouteur("Annuler",moteur,aire));
