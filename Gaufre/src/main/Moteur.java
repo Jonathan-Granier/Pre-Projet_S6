@@ -99,7 +99,7 @@ public class Moteur {
 			T=consulter_coup(coup);
 			if(partie_terminee()){
 				if(s_est_suicide(joueur)) swap_joueur();
-				message = "Joueur " + joueur + " gagne !";
+				message = "Joueur " + joueur + " gagne!";
 				return -1;
 			}
 			histo.add(T.clone());
