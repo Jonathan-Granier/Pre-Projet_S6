@@ -11,13 +11,11 @@ import java.util.Random;
 public class IA {
 	Moteur moteur;
 	int difficulte;
-	Terrain t;
 	
 	public IA (Moteur moteur, int difficulte)
 	{
 		this.moteur = moteur;
 		this.difficulte = difficulte;
-		this.t = moteur.T;
 	}
 	
 	// Determine le prochain coup à jouer et le renvoie.
@@ -39,7 +37,7 @@ public class IA {
 	// Renvoie un coup aléatoire parmi la liste de coup possible.
 	private Point jouer_coup_aleatoire(){
 		Random R = new Random();
-		ArrayList<Point> list_possibilite = t.coups_possibles();
+		ArrayList<Point> list_possibilite = moteur.T.coups_possibles();
 		Point coup = list_possibilite.get(R.nextInt(list_possibilite.size()));
 		return coup;
 	}
@@ -47,7 +45,7 @@ public class IA {
 	// Renvoie un coup gagnant s'il en existe un, sinon renvoie un coup non perdant aléatoire.
 	private Point jouer_coup_perdant_gagnant()
 	{
-		ArrayList <Point> list_coups = t.coups_possibles();
+		ArrayList <Point> list_coups = moteur.T.coups_possibles();
 		ArrayList <Point> coups_gagnants = new ArrayList();
 		ArrayList <Point> coups_perdants = new ArrayList();
 		ArrayList <Point> coups_neutres = new ArrayList();
@@ -90,7 +88,7 @@ public class IA {
 	{
 		Random R = new Random();
 		ArrayList<Point> list_coups = new ArrayList();
-		ArrayList<Point> list_possibilite = t.coups_possibles();
+		ArrayList<Point> list_possibilite = moteur.T.coups_possibles();
 		
 		int max_val = -1000;
 		int val;
@@ -100,7 +98,7 @@ public class IA {
 			Point p_courant = list_possibilite.get(i);
 			
 			
-			Terrain tmp = t.consulter_coup(p_courant);
+			Terrain tmp = moteur.T.consulter_coup(p_courant);
 			val = minimax_Min_B(tmp);
 			if (val == max_val)
 			{
@@ -182,11 +180,11 @@ public class IA {
 	private boolean est_perdant(Point coup)
 	{
 		// Les coups perdants ont forcement une coordonée <2
-		if(coup_egal(coup, 0,1) && t.t[1][0])
+		if(coup_egal(coup, 0,1) && moteur.T.t[1][0])
 		{
 			return true;
 		}
-		else if (coup_egal(coup, 1,0) && t.t[0][1])
+		else if (coup_egal(coup, 1,0) && moteur.T.t[0][1])
 		{
 			return true;
 		}
@@ -206,25 +204,25 @@ public class IA {
 	private boolean est_gagnant(Point coup)
 	{
 		//L'une des case adjacente est déjà bloqué et on bloque l'autre.
-		if( !t.t[0][1] && coup_egal(coup,1,0))
+		if( !moteur.T.t[0][1] && coup_egal(coup,1,0))
 		{
 			return true;
 		}
-		else if ( !t.t[1][0] && coup_egal(coup,0,1))
+		else if ( !moteur.T.t[1][0] && coup_egal(coup,0,1))
 		{
 			return true;
 		}
 		
 		// Après ce coup, on va se retrouver dans une situation 1-1-1
-		else if(!t.t[0][2] && !t.t[1][1] && coup_egal(coup,2,0))
+		else if(!moteur.T.t[0][2] && !moteur.T.t[1][1] && coup_egal(coup,2,0))
 		{
 			return true;
 		}
-		else if (!t.t[0][2] && coup_egal(coup,1,1) && !t.t[2][0])
+		else if (!moteur.T.t[0][2] && coup_egal(coup,1,1) && !moteur.T.t[2][0])
 		{
 			return true;
 		}
-		else if (coup_egal(coup,0,2) && !t.t[1][1] && !t.t[2][0])
+		else if (coup_egal(coup,0,2) && !moteur.T.t[1][1] && !moteur.T.t[2][0])
 		{
 			return true;
 		}
