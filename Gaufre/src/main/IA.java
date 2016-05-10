@@ -20,16 +20,19 @@ public class IA {
 	
 	// Determine le prochain coup à jouer et le renvoie. Si aucun coup n'est possible , renvoi null;
 	public Point jouer_coup(){
-		System.out.println("IA: On me demande de jouer un coup");
 		switch (difficulte)
 		{
 		case 1:
+			System.out.println("IA [rng]: On me demande de jouer un coup");
 			return jouer_coup_aleatoire();
-		case 2:
-			return jouer_coup_perdant_gagnant();
 		case 3:
+			System.out.println("IA [rng + win/lose]: On me demande de jouer un coup");
+			return jouer_coup_perdant_gagnant();
+		case 2:
+			System.out.println("IA [minimax]: On me demande de jouer un coup");
 			return jouer_coup_minimax();
 		default:
+			System.out.println("J'ai pas la bonne difficulté.");
 			return new Point(0,0);
 		}
 	}
@@ -95,6 +98,7 @@ public class IA {
 	private Point jouer_coup_minimax()
 	{
 		Random R = new Random();
+		Point p_courant;
 		ArrayList<Point> list_coups = new ArrayList();
 		
 		ArrayList<Point> list_possibilite = moteur.T.coups_possibles();
@@ -102,65 +106,75 @@ public class IA {
 		{
 			return null;
 		}
-		
 		for(int i=0;i<list_possibilite.size();i++)
 		{
-			Point p_courant = list_possibilite.get(i);
-			
-			
+			p_courant = list_possibilite.get(i);
 			Terrain tmp = moteur.T.consulter_coup(p_courant);
-			if( minimax_Min_B(tmp));
+			if(minimax_Min_perdre(tmp))
 			{
 				list_coups.add(p_courant);
+				System.out.println("On ajoute un coup : "+ p_courant);
 			}
+			
 		}
+		System.out.println("Fin minimax");
 		Point p_retour = list_coups.get(R.nextInt(list_coups.size()));
 		return p_retour;
 	}
 	
 	// C'est à B de jouer , si il doit jouer forcement sur la case (0;0) , on renvoi 1 , sinon on renvoi le maximum du prochain coup de A
-	private boolean minimax_Min_B(Terrain t_courant)
+	private boolean minimax_Min_perdre(Terrain t_courant)
 	{
 		ArrayList<Point> list_possibilite = t_courant.coups_possibles();
 		boolean val= true;
-		
-		
-		if(list_possibilite.size()==1)  // SI il ne reste que la case (0;0) à jouer , alors B à perdu 
+		Point p_courant;
+		if(list_possibilite.size()==0)
+		{
+			return false;
+		}
+		//System.out.println("MM: perdre taille de liste: "+ list_possibilite.size());
+		if(list_possibilite.size()==1 && est_perdant(list_possibilite.get(0)))  // SI il ne reste que la case (0;0) à jouer , alors B à perdu 
 		{
 			return true;
 		}
-		
-		for(int i=0;i<list_possibilite.size();i++)
+		int i=0;
+		// tant qu'on n'as pas trouvé de config perdante, on est gagnant.
+		while(i<list_possibilite.size() && val)
 		{
-			Point p_courant = list_possibilite.get(i);
-			
+			p_courant = list_possibilite.get(i);
 			Terrain tmp = t_courant.consulter_coup(p_courant);
-			val = val && minimax_Max_A(tmp);
+			val = val && minimax_Max_gagnant(tmp);
+			i++;
 			
-		}			
+		}	
+		//System.out.println("Retour MM_perdre :"+val);
 		return val;
 	}
 	
 	// C'est à A de jouer , si il doit jouer forcement sur la case (0;0) , on renvoi -1 , sinon on renvoi le minimum du prochain coup de B
-	private boolean minimax_Max_A(Terrain t_courant)
+	private boolean minimax_Max_gagnant(Terrain t_courant)
 	{
 		ArrayList<Point> list_possibilite = t_courant.coups_possibles();
 		boolean val = false;
-		
-		if(list_possibilite.size()==1)  // SI il ne reste que la case (0;0) à jouer , alors B à perdu 
+		Point p_courant;
+		if(list_possibilite.size()==0)
+		{
+			return true;
+		}
+		if(list_possibilite.size()==1 && est_perdant(list_possibilite.get(0)))  // SI il ne reste que la case (0;0) à jouer , alors A à perdu 
 		{
 			return false;
 		}
-		
-		for(int i=0;i<list_possibilite.size();i++)
+		int i=0;
+		// tant qu'on a pas trouvé de config gagnante, on est perdant.
+		while(i<list_possibilite.size() && !val)
 		{
-			Point p_courant = list_possibilite.get(i);
-			
+			p_courant = list_possibilite.get(i);
 			Terrain tmp = t_courant.consulter_coup(p_courant);
-			val = (val || minimax_Min_B(tmp));
+			val = (val || minimax_Min_perdre(tmp));
+			i++;
 			
 		}			
-		
 		return val;
 	}
 	
