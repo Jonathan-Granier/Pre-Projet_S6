@@ -194,15 +194,15 @@ public class IA {
 		}
 		
 		// Après ce coup, on va se retrouver dans une situation 1-1-1
-		else if(!moteur.T.t[0][2] && !moteur.T.t[1][1] && coup_egal(coup,2,0))
+		else if(!moteur.T.t[0][2] && !moteur.T.t[1][1] && coup_egal(coup,2,0) && moteur.T.t[0][1] && moteur.T.t[1][0])
 		{
 			return true;
 		}
-		else if (!moteur.T.t[0][2] && coup_egal(coup,1,1) && !moteur.T.t[2][0])
+		else if (!moteur.T.t[0][2] && coup_egal(coup,1,1) && !moteur.T.t[2][0] && moteur.T.t[0][1] && moteur.T.t[1][0])
 		{
 			return true;
 		}
-		else if (coup_egal(coup,0,2) && !moteur.T.t[1][1] && !moteur.T.t[2][0])
+		else if (coup_egal(coup,0,2) && !moteur.T.t[1][1] && !moteur.T.t[2][0] && moteur.T.t[0][1] && moteur.T.t[1][0])
 		{
 			return true;
 		}
