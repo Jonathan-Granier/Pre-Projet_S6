@@ -28,6 +28,8 @@ public class IA {
 			return jouer_coup_aleatoire();
 		case 2:
 			return jouer_coup_perdant_gagnant();
+		case 3:
+			return jouer_coup_minimax();
 		default:
 			return new Point(0,0);
 		}
@@ -36,7 +38,7 @@ public class IA {
 	// Renvoie un coup aléatoire parmi la liste de coup possible.
 	private Point jouer_coup_aleatoire(){
 		Random R = new Random();
-		ArrayList<Point> list_possibilite = moteur.coups_possibles();
+		ArrayList<Point> list_possibilite = t.coups_possibles();
 		Point coup = list_possibilite.get(R.nextInt(list_possibilite.size()));
 		return coup;
 	}
@@ -44,7 +46,7 @@ public class IA {
 	// Renvoie un coup gagnant s'il en existe un, sinon renvoie un coup non perdant aléatoire.
 	private Point jouer_coup_perdant_gagnant()
 	{
-		ArrayList <Point> list_coups = moteur.coups_possibles();
+		ArrayList <Point> list_coups = t.coups_possibles();
 		ArrayList <Point> coups_gagnants = new ArrayList();
 		ArrayList <Point> coups_perdants = new ArrayList();
 		ArrayList <Point> coups_neutres = new ArrayList();
@@ -78,6 +80,94 @@ public class IA {
 			return coups_perdants.get(R.nextInt(coups_perdants.size()));
 		}
 	}
+	
+	// Renvoi le meilleur coup trouvé avec l'algo du minimax.
+	private Point jouer_coup_minimax()
+	{
+		Random R = new Random();
+		ArrayList<Point> list_coups = new ArrayList();
+		ArrayList<Point> list_possibilite = t.coups_possibles();
+		
+		int max_val = -1000;
+		int val;
+		
+		for(int i=0;i<list_possibilite.size();i++)
+		{
+			Point p_courant = list_possibilite.get(i);
+			
+			
+			Terrain tmp = t.consulter_coup(p_courant);
+			val = minimax_Min_B(tmp);
+			if (val == max_val)
+			{
+				list_coups.add(p_courant);
+			}
+			else if(val > max_val)
+			{
+				max_val = val;
+				list_coups = new ArrayList();
+				list_coups.add(p_courant);
+			}
+		}
+		Point p_retour = list_coups.get(R.nextInt(list_coups.size()));
+		return p_retour;
+	}
+	
+	// C'est à B de jouer , si il doit jouer forcement sur la case (0;0) , on renvoi 1 , sinon on renvoi le maximum du prochain coup de A
+	private int minimax_Min_B(Terrain t_courant)
+	{
+		ArrayList<Point> list_possibilite = t_courant.coups_possibles();
+		int val;
+		int min_val = 1000;
+		
+		
+		if(list_possibilite.size()==1)  // SI il ne reste que la case (0;0) à jouer , alors B à perdu 
+		{
+			return 1;
+		}
+		
+		for(int i=0;i<list_possibilite.size();i++)
+		{
+			Point p_courant = list_possibilite.get(i);
+			
+			Terrain tmp = t_courant.consulter_coup(p_courant);
+			val = minimax_Max_A(tmp);
+			if (val < min_val)
+			{
+				min_val= val;
+			}
+		}			
+		return min_val;
+	}
+	
+	// C'est à A de jouer , si il doit jouer forcement sur la case (0;0) , on renvoi -1 , sinon on renvoi le minimum du prochain coup de B
+	private int minimax_Max_A(Terrain t_courant)
+	{
+		ArrayList<Point> list_possibilite = t_courant.coups_possibles();
+		int val;
+		int max_val = -1000;
+		
+		if(list_possibilite.size()==1)  // SI il ne reste que la case (0;0) à jouer , alors B à perdu 
+		{
+			return -1;
+		}
+		
+		for(int i=0;i<list_possibilite.size();i++)
+		{
+			Point p_courant = list_possibilite.get(i);
+			
+			Terrain tmp = t_courant.consulter_coup(p_courant);
+			val = minimax_Min_B(tmp);
+			if (val > max_val)
+			{
+				max_val= val;
+			}
+		}			
+		
+		return max_val;
+	}
+	
+	
 	
 	/*
 	 Un coup est perdant si après celui-ci
