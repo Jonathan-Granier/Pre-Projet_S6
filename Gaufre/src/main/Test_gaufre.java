@@ -23,6 +23,8 @@ public class Test_gaufre {
 	static Joueur joueur1;
 	static Joueur joueur2;
 	
+
+	
 	public static JMenu menuPrincipal(Moteur moteur,AireDeDessin aire) {
 		JMenu principal;
         	JMenuItem item;
@@ -98,7 +100,7 @@ public class Test_gaufre {
 		//Aire de dessin
 		
 		AireDeDessin aire = new AireDeDessin(moteur);
-		aire.addMouseListener(new EcouteurDeSouris(aire,moteur,joueur1,joueur2,J1_score,J2_score,turn));
+		aire.addMouseListener(new EcouteurDeSouris(aire,moteur,joueur1,joueur2,J1_score,J2_score,turn,frame));
 		
 
 		
