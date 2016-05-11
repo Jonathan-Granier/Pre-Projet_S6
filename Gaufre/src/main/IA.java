@@ -366,6 +366,7 @@ public class IA {
 	
 	private int eval_Heuristique(Terrain t)
 	{
+		
 		if(!t.t[1][1])
 		{
 			// on vérifie que les deux branches sont de la même longueure
