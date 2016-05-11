@@ -318,7 +318,6 @@ public class IA {
 			Terrain tmp = t_courant.consulter_coup(p_courant);
 			val = val && minimax_Max_gagnant(tmp);
 			i++;
-			
 		}	
 		//System.out.println("Retour MM_perdre :"+val);
 		return val;
