@@ -149,12 +149,12 @@ public class IA {
 		Point p_courant;
 		if(list_possibilite.size()==0)
 		{
-			return -1;
+			return 1;
 		}
 		//System.out.println("MM: perdre taille de liste: "+ list_possibilite.size());
-		if(list_possibilite.size()==1 && est_perdant(list_possibilite.get(0)))  // SI il ne reste que la case (0;0) à jouer , alors B à perdu 
+		if(list_possibilite.size()==1)  // SI il ne reste que la case (0;0) à jouer , alors B à perdu 
 		{
-			return 1;
+			return -1;
 		}
 		if(profondeur == 0)
 		{
@@ -187,11 +187,11 @@ public class IA {
 		Point p_courant;
 		if(list_possibilite.size()==0)
 		{
-			return 1;
-		}
-		if(list_possibilite.size()==1 && est_perdant(list_possibilite.get(0)))  // SI il ne reste que la case (0;0) à jouer , alors A à perdu 
-		{
 			return -1;
+		}
+		if(list_possibilite.size()==1)  // SI il ne reste que la case (0;0) à jouer , alors A à perdu 
+		{
+			return 1;
 		}
 		if(profondeur == 0)
 		{
@@ -303,12 +303,12 @@ public class IA {
 		Point p_courant;
 		if(list_possibilite.size()==0)
 		{
-			return false;
+			return true;
 		}
 		//System.out.println("MM: perdre taille de liste: "+ list_possibilite.size());
-		if(list_possibilite.size()==1 && est_perdant(list_possibilite.get(0)))  // SI il ne reste que la case (0;0) à jouer , alors B à perdu 
+		if(list_possibilite.size()==1)  // SI il ne reste que la case (0;0) à jouer , alors B à perdu 
 		{
-			return true;
+			return false;
 		}
 		int i=0;
 		// tant qu'on n'as pas trouvé de config perdante, on est gagnant.
@@ -332,11 +332,11 @@ public class IA {
 		Point p_courant;
 		if(list_possibilite.size()==0)
 		{
-			return true;
-		}
-		if(list_possibilite.size()==1 && est_perdant(list_possibilite.get(0)))  // SI il ne reste que la case (0;0) à jouer , alors A à perdu 
-		{
 			return false;
+		}
+		if(list_possibilite.size()==1)  // SI il ne reste que la case (0;0) à jouer , alors A à perdu 
+		{
+			return true;
 		}
 		int i=0;
 		// tant qu'on a pas trouvé de config gagnante, on est perdant.
@@ -346,7 +346,6 @@ public class IA {
 			Terrain tmp = t_courant.consulter_coup(p_courant);
 			val = (val || minimax_Min_perdre(tmp));
 			i++;
-			
 		}			
 		return val;
 	}
