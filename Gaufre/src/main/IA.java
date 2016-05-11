@@ -157,7 +157,7 @@ public class IA {
 		}
 		int i=0;
 		// tant qu'on n'as pas trouvé de config perdante, on est gagnant.
-		while(i<list_possibilite.size())
+		while(i<list_possibilite.size() && val != -1)
 		{
 			p_courant = list_possibilite.get(i);
 			Terrain tmp = t_courant.consulter_coup(p_courant);
@@ -190,7 +190,7 @@ public class IA {
 		}
 		int i=0;
 		// tant qu'on a pas trouvé de config gagnante, on est perdant.
-		while(i<list_possibilite.size())
+		while(i<list_possibilite.size() && val != 1)
 		{
 			p_courant = list_possibilite.get(i);
 			Terrain tmp = t_courant.consulter_coup(p_courant);
