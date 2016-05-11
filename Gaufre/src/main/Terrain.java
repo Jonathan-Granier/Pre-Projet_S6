@@ -52,7 +52,7 @@ public class Terrain {
 		else return t[coup.x][coup.y];
 	}
 	
-	// Renvoie une ArrayList des coups autorises (0,0) compris
+	// Renvoie une ArrayList des coups autorises (0,0) NON compris
 	public ArrayList<Point> coups_possibles(){
 		ArrayList<Point> res=new ArrayList<Point>();
 		for(int i=0;i<l;i++){
