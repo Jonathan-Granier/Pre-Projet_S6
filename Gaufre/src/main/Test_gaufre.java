@@ -26,6 +26,8 @@ public class Test_gaufre implements Runnable {
 
 	final static int WIDTH = 500;
 	final static int HEIGHT = 500;
+	final static int TERRAIN_L = 8;
+	final static int TERRAIN_H = 6;
 	static JFrame frame;
 	static Joueur joueur1;
 	static Joueur joueur2;
@@ -77,9 +79,11 @@ public class Test_gaufre implements Runnable {
 		j2.setSelected(false);
 		
 		JPanel panel2 = new JPanel();
-		panel2.setLayout(new GridLayout(2,1));
 		panel2.add(joueur1_label);
 		panel2.add(j1);
+		
+		JPanel panel2_2 = new JPanel();
+		
 		j1.addItemListener(new ItemListener(){
 			public void itemStateChanged(ItemEvent e) {joueur1.setIa(j1.isSelected());
 			System.out.println(joueur1.isIa());}
@@ -91,9 +95,9 @@ public class Test_gaufre implements Runnable {
 //		frame.add(panel2,BorderLayout.WEST);
 		
 		JPanel panel3 = new JPanel();
-		panel3.setLayout(new GridLayout(2,1));
 		panel3.add(joueur2_label);
 		panel3.add(j2);
+		JPanel panel3_3 = new JPanel();
 //		frame.add(panel3,BorderLayout.EAST);
 		
 	    //Create the radio buttons.
@@ -116,10 +120,10 @@ public class Test_gaufre implements Runnable {
 	    group.add(ia3);
 	    group.add(ia4);
 	    
-	    panel2.add(ia1);
-	    panel2.add(ia2);
-	    panel2.add(ia3);
-	    panel2.add(ia4);
+	    panel2_2.add(ia1);
+	    panel2_2.add(ia2);
+	    panel2_2.add(ia3);
+	    panel2_2.add(ia4);
 	    
 	    //Create the radio buttons.
 	    JRadioButton ia5 = new JRadioButton("1");
@@ -141,10 +145,10 @@ public class Test_gaufre implements Runnable {
 	    group2.add(ia7);
 	    group2.add(ia8);
 
-	    panel3.add(ia5);
-	    panel3.add(ia6);
-	    panel3.add(ia7);
-	    panel3.add(ia8);
+	    panel3_3.add(ia5);
+	    panel3_3.add(ia6);
+	    panel3_3.add(ia7);
+	    panel3_3.add(ia8);
 	    
 	    ia1.addActionListener(new ActionListener(){public void actionPerformed(ActionEvent e) {
                     int i = Integer.parseInt(e.getActionCommand());
@@ -188,15 +192,25 @@ public class Test_gaufre implements Runnable {
 		}
 		});
 		
-		JButton play = new JButton("PLAY");
+		JButton play = new JButton("JOUER");
 		panel.add(play, JComponent.CENTER_ALIGNMENT);
 //		frame.add(panel, BorderLayout.CENTER);
 		
+		JPanel panel2_total = new JPanel();
+		panel2_total.setLayout(new GridLayout(2,1));
+		panel2_total.add(panel2);
+		panel2_total.add(panel2_2);
+
+		JPanel panel3_total = new JPanel();
+		panel3_total.setLayout(new GridLayout(2,1));
+		panel3_total.add(panel3);
+		panel3_total.add(panel3_3);
+		
 		JPanel test = new JPanel();
 		test.setLayout(new BorderLayout());
-		test.add(panel2, BorderLayout.WEST);
+		test.add(panel2_total, BorderLayout.WEST);
 		test.add(panel, BorderLayout.CENTER);
-		test.add(panel3, BorderLayout.EAST);
+		test.add(panel3_total, BorderLayout.EAST);
 		frame.setLayout(new GridLayout(3,1));
 		frame.add(panel);
 		frame.add(test);
@@ -208,7 +222,7 @@ public class Test_gaufre implements Runnable {
 		frame = new JFrame("Gauffre");
 		frame.setSize(WIDTH, HEIGHT);
 		frame.setVisible(true);
-		Terrain terrain = new Terrain(4,6);
+		Terrain terrain = new Terrain(TERRAIN_L,TERRAIN_H);
 		Moteur moteur = new Moteur(terrain,joueur1,joueur2);
 		
 		JPanel panel = new JPanel();

@@ -4,8 +4,10 @@ import javax.swing.*;
 
 import java.awt.Point;
 import java.awt.event.*;
+import java.util.Observable;
+import java.util.Observer;
 
-class EcouteurDeSouris implements MouseListener, MouseMotionListener {
+class EcouteurDeSouris implements MouseListener, MouseMotionListener, Observer {
 	
 	AireDeDessin aire;
 	Moteur moteur;
@@ -60,6 +62,17 @@ class EcouteurDeSouris implements MouseListener, MouseMotionListener {
     	return false;
 	}
 	
+	public void callAnim(){
+		Animation anim;
+        anim = new Animation(aire);
+        anim.addObserver(this);
+	}
+	
+	@Override
+	public void update(Observable o, Object arg) {
+		aire.repaint();
+	}
+	
     public void mousePressed(MouseEvent e) {
     	Point p = new Point(aire.Case(e.getX(), e.getY()));
     	int retour;
@@ -68,7 +81,7 @@ class EcouteurDeSouris implements MouseListener, MouseMotionListener {
 	    	//if((moteur.joueur == 1 && !moteur.j[1].isIa())){
     		if(!moteur.j[moteur.getJ()].isIa()){
 	    		retour = moteur.jouer_coup(p);
-	    		aire.repaint();
+	    		callAnim();
 	    		if(retour > 0){
 	    			J1.setText(Integer.toString(moteur.j[1].getScore()));
 	        		J2.setText(Integer.toString(moteur.j[2].getScore()));
@@ -78,42 +91,32 @@ class EcouteurDeSouris implements MouseListener, MouseMotionListener {
 	    		}
 	    		if(moteur.j[moteur.getJ()].isIa()){
 		    		iaTurn(moteur.getJ());
-		    		try {
-						Thread.sleep(1000);
-					} catch (InterruptedException e1) {
-						e1.printStackTrace();
-					}
-		    		aire.repaint();
+		    		callAnim();
 		    		if(isOver())
 		    			return;
 	    		}
 	    	}
 	    	else if(moteur.joueur == 1 && moteur.j[1].isIa()){
 	    		iaTurn(1);
-	    		aire.repaint();
+	    		callAnim();
 	    		if(isOver())
 	    			return;
 	    	}
 	    	else if((moteur.joueur == 2 && !moteur.j[2].isIa())){
 	    		moteur.jouer_coup(p);
-	    		aire.repaint();
+	    		callAnim();
 	    		if(isOver())
 	    			return;
 	    		if(moteur.j[1].isIa()){
 		    		iaTurn(1);
-		    		try {
-						Thread.sleep(1000);
-					} catch (InterruptedException e1) {
-						e1.printStackTrace();
-					}
-		    		aire.repaint();
+		    		callAnim();
 		    		if(isOver())
 		    			return;
 	    		}
 	    	}
 	    	else if(moteur.joueur == 2 && moteur.j[2].isIa()){
 	    		iaTurn(2);
-	    		aire.repaint();
+	    		callAnim();
 	    		if(isOver())
 	    			return;
 	    	}
@@ -158,6 +161,7 @@ class EcouteurDeSouris implements MouseListener, MouseMotionListener {
 		// TODO Auto-generated method stub
 		
 	}
+
 
 
 }
