@@ -13,7 +13,10 @@ class AireDeDessin extends JComponent {
 	public Point Case(int x, int y){
 		int ratioX =getSize().width/moteur.T.l;
 		int ratioY = getSize().height/moteur.T.h;
-		return new Point(x/ratioX,y/ratioY);
+		if(moteur.T.t[x/ratioX][y/ratioY])
+			return new Point(x/ratioX,y/ratioY);
+		else
+			return new Point(-1,-1);
 	}
 	
     public void paintComponent(Graphics g) {

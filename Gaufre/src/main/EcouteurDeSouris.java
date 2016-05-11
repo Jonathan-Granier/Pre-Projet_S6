@@ -62,49 +62,50 @@ class EcouteurDeSouris implements MouseListener, MouseMotionListener {
     public void mousePressed(MouseEvent e) {
     	Point p = new Point(aire.Case(e.getX(), e.getY()));
     	//Check if ia
-    	if((moteur.joueur == 1 && !moteur.j1.isIa())){
-    		moteur.jouer_coup(p);
-    		aire.repaint();
-    		isOver();
-    		if(moteur.j2.isIa()){
-	    		iaTurn(2);
-	    		try {
-					Thread.sleep(1000);
-				} catch (InterruptedException e1) {
-					e1.printStackTrace();
-				}
+    	if(!p.equals(new Point(-1,-1))){
+	    	if((moteur.joueur == 1 && !moteur.j1.isIa())){
+	    		moteur.jouer_coup(p);
 	    		aire.repaint();
 	    		isOver();
-    		}
-    	}
-    	else if(moteur.joueur == 1 && moteur.j1.isIa()){
-    		iaTurn(1);
-    		aire.repaint();
-    		isOver();
-    	}
-    	else if((moteur.joueur == 2 && !moteur.j2.isIa())){
-    		moteur.jouer_coup(p);
-    		aire.repaint();
-    		isOver();
-    		if(moteur.j1.isIa()){
+	    		if(moteur.j2.isIa()){
+		    		iaTurn(2);
+		    		try {
+						Thread.sleep(1000);
+					} catch (InterruptedException e1) {
+						e1.printStackTrace();
+					}
+		    		aire.repaint();
+		    		isOver();
+	    		}
+	    	}
+	    	else if(moteur.joueur == 1 && moteur.j1.isIa()){
 	    		iaTurn(1);
-	    		try {
-					Thread.sleep(1000);
-				} catch (InterruptedException e1) {
-					e1.printStackTrace();
-				}
 	    		aire.repaint();
 	    		isOver();
-    		}
+	    	}
+	    	else if((moteur.joueur == 2 && !moteur.j2.isIa())){
+	    		moteur.jouer_coup(p);
+	    		aire.repaint();
+	    		isOver();
+	    		if(moteur.j1.isIa()){
+		    		iaTurn(1);
+		    		try {
+						Thread.sleep(1000);
+					} catch (InterruptedException e1) {
+						e1.printStackTrace();
+					}
+		    		aire.repaint();
+		    		isOver();
+	    		}
+	    	}
+	    	else if(moteur.joueur == 2 && moteur.j2.isIa()){
+	    		iaTurn(2);
+	    		aire.repaint();
+	    		isOver();
+	    	}
+	    	
+	    	turn.setText(moteur.message);
     	}
-    	else if(moteur.joueur == 2 && moteur.j2.isIa()){
-    		iaTurn(2);
-    		aire.repaint();
-    		isOver();
-    	}
-    	
-    	turn.setText(moteur.message);
-  
     	
     }
 
