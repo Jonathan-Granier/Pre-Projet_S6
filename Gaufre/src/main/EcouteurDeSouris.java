@@ -65,7 +65,7 @@ class EcouteurDeSouris implements MouseListener, MouseMotionListener {
     public void mousePressed(MouseEvent e) {
     	Point p = new Point(aire.Case(e.getX(), e.getY()));
     	//Check if ia
-    	if(!p.equals(new Point(-1,-1))){
+    	if(!p.equals(new Point(-1,-1)) || (moteur.j1.isIa() && moteur.j2.isIa())){
 	    	if((moteur.joueur == 1 && !moteur.j1.isIa())){
 	    		moteur.jouer_coup(p);
 	    		aire.repaint();

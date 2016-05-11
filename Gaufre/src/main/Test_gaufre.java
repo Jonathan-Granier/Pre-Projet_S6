@@ -20,8 +20,9 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 
-public class Test_gaufre {
+public class Test_gaufre implements Runnable {
 
 	final static int WIDTH = 500;
 	final static int HEIGHT = 500;
@@ -36,7 +37,7 @@ public class Test_gaufre {
 		JMenu principal;
         	JMenuItem item;
 		principal = new JMenu("Option");
-		item = new JMenuItem("Nouveaux");
+		item = new JMenuItem("NouveauX");
 		item.addActionListener(new Ecouteur("Nouveaux",moteur,aire,J1_score,J2_score,turn));
 		principal.add(item);
 		item = new JMenuItem("Sauver");
@@ -94,9 +95,6 @@ public class Test_gaufre {
 		frame.add(panel3,BorderLayout.EAST);
 		
 	    //Create the radio buttons.
-	    JRadioButton birdButton = new JRadioButton("1");
-	    birdButton.setActionCommand("1");
-	    birdButton.setSelected(true);
 	    JRadioButton ia1 = new JRadioButton("1");
 	    ia1.setActionCommand("1");
 	    ia1.setSelected(true);		
@@ -111,29 +109,64 @@ public class Test_gaufre {
 	    group.add(ia1);
 	    group.add(ia2);
 	    group.add(ia3);
+
+	    panel2.add(ia1);
+	    panel2.add(ia2);
+	    panel2.add(ia3);
 	    
-	    panel.add(ia1);
-	    panel.add(ia2);
-	    panel.add(ia3);
+	    //Create the radio buttons.
+	    JRadioButton ia4 = new JRadioButton("1");
+	    ia4.setActionCommand("1");
+	    ia4.setSelected(true);		
+		
+	    JRadioButton ia5 = new JRadioButton("2");
+	    ia5.setActionCommand("2");
+
+	    JRadioButton ia6 = new JRadioButton("3");
+	    ia6.setActionCommand("3");
+	    
+	    ButtonGroup group2 = new ButtonGroup();
+	    group2.add(ia4);
+	    group2.add(ia5);
+	    group2.add(ia6);
+
+	    
+	    panel3.add(ia4);
+	    panel3.add(ia5);
+	    panel3.add(ia6);
 	    
 	    ia1.addActionListener(new ActionListener(){public void actionPerformed(ActionEvent e) {
                     int i = Integer.parseInt(e.getActionCommand());
                     joueur1.setIaLevel(i);
-                    joueur2.setIaLevel(i);
 	    }
 	    });
 	    ia2.addActionListener(new ActionListener(){public void actionPerformed(ActionEvent e) {
             int i = Integer.parseInt(e.getActionCommand());
             joueur1.setIaLevel(i);
-            joueur2.setIaLevel(i);
 		}
 		});
 	    ia3.addActionListener(new ActionListener(){public void actionPerformed(ActionEvent e) {
             int i = Integer.parseInt(e.getActionCommand());
             joueur1.setIaLevel(i);
+		}
+		});   
+	    
+	    ia4.addActionListener(new ActionListener(){public void actionPerformed(ActionEvent e) {
+            int i = Integer.parseInt(e.getActionCommand());
             joueur2.setIaLevel(i);
 		}
-		});    
+		});
+		ia5.addActionListener(new ActionListener(){public void actionPerformed(ActionEvent e) {
+		    int i = Integer.parseInt(e.getActionCommand());
+		    joueur2.setIaLevel(i);
+		}
+		});
+		ia6.addActionListener(new ActionListener(){public void actionPerformed(ActionEvent e) {
+		    int i = Integer.parseInt(e.getActionCommand());
+		    joueur2.setIaLevel(i);
+		}
+		});
+	    
 		JButton play = new JButton("PLAY");
 		panel.add(play, JComponent.CENTER_ALIGNMENT);
 		frame.add(panel, BorderLayout.CENTER);
@@ -193,10 +226,8 @@ public class Test_gaufre {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);		
 	}
 	
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		
-		frame = new JFrame("Gauffre");
+	public void run(){
+		frame = new JFrame("Gaufre");
 		
 		titleScreen();
 		
@@ -204,7 +235,10 @@ public class Test_gaufre {
 		frame.setSize(WIDTH, HEIGHT);
 		frame.setVisible(true);
 		
-		
+	}
+	
+	public static void main(String[] args) {
+		SwingUtilities.invokeLater(new Test_gaufre());
 	}
 
 }
