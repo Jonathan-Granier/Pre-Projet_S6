@@ -29,6 +29,9 @@ public class IA {
 			System.out.println("IA [rng + win/lose]: On me demande de jouer un coup");
 			return jouer_coup_perdant_gagnant();
 		case 3:
+			System.out.println("IA [minimax+Heuristique]: On me demande de jouer un coup");
+			return jouer_coup_minimax_Heuristique();
+		case 4:
 			System.out.println("IA [minimax]: On me demande de jouer un coup");
 			return jouer_coup_minimax();
 		default:
@@ -36,7 +39,7 @@ public class IA {
 			return new Point(0,0);
 		}
 	}
-	
+	// ----------------- IA 1 -----------------------------
 	// Renvoie un coup aléatoire parmi la liste de coup possible.
 	private Point jouer_coup_aleatoire(){
 		Random R = new Random();
@@ -49,6 +52,7 @@ public class IA {
 		return coup;
 	}
 	
+	// ----------------------- IA 2 ------------------------------
 	// Renvoie un coup gagnant s'il en existe un, sinon renvoie un coup non perdant aléatoire.
 	private Point jouer_coup_perdant_gagnant()
 	{
@@ -94,6 +98,115 @@ public class IA {
 		}
 	}
 	
+	
+	// --------------------------- IA 3--------------------------
+	
+	
+	private Point jouer_coup_minimax_Heuristique()
+	{
+		Random R = new Random();
+		Point p_courant;
+		int profondeur = 10;
+		ArrayList<Point> list_coups = new ArrayList();
+		
+		ArrayList<Point> list_possibilite = moteur.T.coups_possibles();
+		if(list_possibilite.isEmpty())
+		{
+			return null;
+		}
+		for(int i=0;i<list_possibilite.size();i++)
+		{
+			p_courant = list_possibilite.get(i);
+			Terrain tmp = moteur.T.consulter_coup(p_courant);
+			if(minimax_Min_perdre_Heuristique(tmp,profondeur) == 1)
+			{
+				list_coups.add(p_courant);
+				System.out.println("On ajoute un coup : "+ p_courant);
+			}
+			
+		}
+		System.out.println("Fin minimax");
+		if(! list_coups.isEmpty())
+		{
+			return list_coups.get(R.nextInt(list_coups.size()));
+		}
+		else
+		{
+			return jouer_coup_perdant_gagnant(); 
+		}
+	}
+	
+	// C'est à B de jouer , si il doit jouer forcement sur la case (0;0) , on renvoi 1 , sinon on renvoi le maximum du prochain coup de A
+	private int minimax_Min_perdre_Heuristique(Terrain t_courant,int profondeur)
+	{
+		ArrayList<Point> list_possibilite = t_courant.coups_possibles();
+		int val = 1;
+		Point p_courant;
+		if(list_possibilite.size()==0)
+		{
+			return -1;
+		}
+		//System.out.println("MM: perdre taille de liste: "+ list_possibilite.size());
+		if(list_possibilite.size()==1 && est_perdant(list_possibilite.get(0)))  // SI il ne reste que la case (0;0) à jouer , alors B à perdu 
+		{
+			return 1;
+		}
+		if(profondeur == 0)
+		{
+			return eval_Heuristique(t_courant);
+		}
+		int i=0;
+		// tant qu'on n'as pas trouvé de config perdante, on est gagnant.
+		while(i<list_possibilite.size())
+		{
+			p_courant = list_possibilite.get(i);
+			Terrain tmp = t_courant.consulter_coup(p_courant);
+			val = Math.min(val,minimax_Max_gagnant_Heuristique(tmp,profondeur-1));
+			i++;
+			
+		}	
+		//System.out.println("Retour MM_perdre :"+val);
+		return val;
+	}
+	
+	
+	// C'est à A de jouer , si il doit jouer forcement sur la case (0;0) , on renvoi -1 , sinon on renvoi le minimum du prochain coup de B
+	private int minimax_Max_gagnant_Heuristique(Terrain t_courant,int profondeur)
+	{
+		ArrayList<Point> list_possibilite = t_courant.coups_possibles();
+		int val = -1;
+		Point p_courant;
+		if(list_possibilite.size()==0)
+		{
+			return 1;
+		}
+		if(list_possibilite.size()==1 && est_perdant(list_possibilite.get(0)))  // SI il ne reste que la case (0;0) à jouer , alors A à perdu 
+		{
+			return -1;
+		}
+		if(profondeur == 0)
+		{
+			return eval_Heuristique(t_courant);
+		}
+		int i=0;
+		// tant qu'on a pas trouvé de config gagnante, on est perdant.
+		while(i<list_possibilite.size())
+		{
+			p_courant = list_possibilite.get(i);
+			Terrain tmp = t_courant.consulter_coup(p_courant);
+			val = Math.max(val,minimax_Min_perdre_Heuristique(tmp,profondeur-1));
+			i++;
+			
+		}			
+		return val;
+	}
+
+	
+	
+	
+	
+	
+	// ------------------- IA 4 -----------------------------
 	// Renvoi le meilleur coup trouvé avec l'algo du minimax.
 	private Point jouer_coup_minimax()
 	{
@@ -124,7 +237,7 @@ public class IA {
 		}
 		else
 		{
-			return jouer_coup_perdant_gagnant();
+			return jouer_coup_perdant_gagnant(); 
 		}
 	}
 	
@@ -183,6 +296,8 @@ public class IA {
 		}			
 		return val;
 	}
+
+	
 	
 	/*
 	 Un coup est perdant si après celui-ci
@@ -248,6 +363,7 @@ public class IA {
 		return coup.x == x && coup.y ==y;
 	}
 	
+	
 	private int eval_Heuristique(Terrain t)
 	{
 		if(!t.t[1][1])
@@ -255,36 +371,36 @@ public class IA {
 			// on vérifie que les deux branches sont de la même longueure
 			int x_max = 0;
 			int y_max = 0;
-			while( x_max < t.h && t.t[x_max][0])
+			while( x_max < t.l && t.t[x_max][0])
 				x_max++;
-			while( y_max < t.l && t.t[0][y_max])
+			while( y_max < t.h && t.t[0][y_max])
 				y_max++;
 			if( x_max == y_max)
 			{
-				// on retourne moins l'infini si les deux branches sont de la même longueur.
+				// on retourne -1 si les deux branches sont de la même longueur.
 				return -1;
 			}
 			else if( x_max != y_max)
 			{
-				// on retourne plus l'infini si les deux branches sont de longueur différentes.
-				return +1;
+				// on retourne +1 si les deux branches sont de longueur différentes.
+				return 1;
 			}
 		}
 		else if(t.t[1][1])
 		{
 			int x_max = 0;
 			int y_max = 0;
-			while( x_max < t.h && t.t[x_max][0])
+			while( x_max < t.l && t.t[x_max][0])
 				x_max++;
-			while( y_max < t.l && t.t[0][y_max])
+			while( y_max < t.h && t.t[0][y_max])
 				y_max++;
 			if( x_max == y_max)
 			{
-				// on retourne plus l'infini si les deux branches sont de la même longueur.
+				// on retourne +1 si les deux branches sont de la même longueur.
 				return 1;
 			}
 		}
-		
+		// On retourne 0 quand on a que des coups neutres
 		return 0;
 	}
 }
