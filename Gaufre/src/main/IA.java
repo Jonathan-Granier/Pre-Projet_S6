@@ -61,9 +61,9 @@ public class IA {
 		{
 			return null;
 		}
-		ArrayList <Point> coups_gagnants = new ArrayList();
-		ArrayList <Point> coups_perdants = new ArrayList();
-		ArrayList <Point> coups_neutres = new ArrayList();
+		ArrayList <Point> coups_gagnants = new ArrayList<Point>();
+		ArrayList <Point> coups_perdants = new ArrayList<Point>();
+		ArrayList <Point> coups_neutres = new ArrayList<Point>();
 		for(int i=0; i< list_coups.size(); i++)
 		{
 			if(est_gagnant(list_coups.get(i)))
@@ -101,13 +101,13 @@ public class IA {
 	
 	// --------------------------- IA 3--------------------------
 	
-	
+	// Renvoi le meilleur coup trouvé avec l'algo du minimax mais il s'arrete à une profondeur 10, et calcule l'heuristique du terrain actuel .
 	private Point jouer_coup_minimax_Heuristique()
 	{
 		Random R = new Random();
 		Point p_courant;
 		int profondeur = 10;
-		ArrayList<Point> list_coups = new ArrayList();
+		ArrayList<Point> list_coups = new ArrayList<Point>();
 		
 		ArrayList<Point> list_possibilite = moteur.T.coups_possibles();
 		if(list_possibilite.isEmpty())
@@ -136,7 +136,12 @@ public class IA {
 		}
 	}
 	
-	// C'est à B de jouer , si il doit jouer forcement sur la case (0;0) , on renvoi 1 , sinon on renvoi le maximum du prochain coup de A
+	/* 	C'est à B de jouer , 
+	*	Si aucun coup n'est possible il renvoi -1 (victoire)
+	*	Si il doit jouer forcement sur la case (0;0) , on renvoi 1 (defaite) ,
+	*	Si la profondeur est atteint , renvoi l'heuristique du terrain courant
+	*	Sinon on renvoi le minimum du prochain coup de A
+	*/
 	private int minimax_Min_perdre_Heuristique(Terrain t_courant,int profondeur)
 	{
 		ArrayList<Point> list_possibilite = t_courant.coups_possibles();
@@ -169,8 +174,12 @@ public class IA {
 		return val;
 	}
 	
-	
-	// C'est à A de jouer , si il doit jouer forcement sur la case (0;0) , on renvoi -1 , sinon on renvoi le minimum du prochain coup de B
+	/* 	C'est à A de jouer , 
+	*	Si aucun coup n'est possible il renvoi 1 (victoire)
+	*	Si il doit jouer forcement sur la case (0;0) , on renvoi -1 (defaite) ,
+	*	Si la profondeur est atteint , renvoi l'heuristique du terrain courant
+	*	sinon on renvoi le max du prochain coup de B
+	*/
 	private int minimax_Max_gagnant_Heuristique(Terrain t_courant,int profondeur)
 	{
 		ArrayList<Point> list_possibilite = t_courant.coups_possibles();
@@ -201,7 +210,52 @@ public class IA {
 		return val;
 	}
 
-	
+	/*
+	 * Fait l'evaluation Heuristique du terrain t
+	 * Si il est dans une configuration gagnate renvoi 1
+	 * Si il est dans une configuration perdante renvoi -1
+	 * Sinon renvoi 0 , la configuration n'est ni favorable , ni défavorable
+	 */
+	private int eval_Heuristique(Terrain t)
+	{
+		
+		if(!t.t[1][1])
+		{
+			// on vérifie que les deux branches sont de la même longueure
+			int x_max = 0;
+			int y_max = 0;
+			while( x_max < t.l && t.t[x_max][0])
+				x_max++;
+			while( y_max < t.h && t.t[0][y_max])
+				y_max++;
+			if( x_max == y_max)
+			{
+				// on retourne -1 si les deux branches sont de la même longueur.
+				return -1;
+			}
+			else if( x_max != y_max)
+			{
+				// on retourne +1 si les deux branches sont de longueur différentes.
+				return 1;
+			}
+		}
+		else if(t.t[1][1])
+		{
+			int x_max = 0;
+			int y_max = 0;
+			while( x_max < t.l && t.t[x_max][0])
+				x_max++;
+			while( y_max < t.h && t.t[0][y_max])
+				y_max++;
+			if( x_max == y_max)
+			{
+				// on retourne +1 si les deux branches sont de la même longueur.
+				return 1;
+			}
+		}
+		// On retourne 0 quand on a que des coups neutres
+		return 0;
+	}
 	
 	
 	
@@ -212,7 +266,7 @@ public class IA {
 	{
 		Random R = new Random();
 		Point p_courant;
-		ArrayList<Point> list_coups = new ArrayList();
+		ArrayList<Point> list_coups = new ArrayList<Point>();
 		
 		ArrayList<Point> list_possibilite = moteur.T.coups_possibles();
 		if(list_possibilite.isEmpty())
@@ -364,44 +418,5 @@ public class IA {
 	}
 	
 	
-	private int eval_Heuristique(Terrain t)
-	{
-		
-		if(!t.t[1][1])
-		{
-			// on vérifie que les deux branches sont de la même longueure
-			int x_max = 0;
-			int y_max = 0;
-			while( x_max < t.l && t.t[x_max][0])
-				x_max++;
-			while( y_max < t.h && t.t[0][y_max])
-				y_max++;
-			if( x_max == y_max)
-			{
-				// on retourne -1 si les deux branches sont de la même longueur.
-				return -1;
-			}
-			else if( x_max != y_max)
-			{
-				// on retourne +1 si les deux branches sont de longueur différentes.
-				return 1;
-			}
-		}
-		else if(t.t[1][1])
-		{
-			int x_max = 0;
-			int y_max = 0;
-			while( x_max < t.l && t.t[x_max][0])
-				x_max++;
-			while( y_max < t.h && t.t[0][y_max])
-				y_max++;
-			if( x_max == y_max)
-			{
-				// on retourne +1 si les deux branches sont de la même longueur.
-				return 1;
-			}
-		}
-		// On retourne 0 quand on a que des coups neutres
-		return 0;
-	}
+
 }
