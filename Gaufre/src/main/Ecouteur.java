@@ -37,8 +37,8 @@ public class Ecouteur implements ActionListener {
     	else if(label.equals("Nouveaux")){
     		moteur.nouvelle_partie();
     		moteur.initScore();
-    		J1.setText(Integer.toString(moteur.j1.getScore()));
-    		J2.setText(Integer.toString(moteur.j2.getScore()));
+    		J1.setText(Integer.toString(moteur.j[1].getScore()));
+    		J2.setText(Integer.toString(moteur.j[2].getScore()));
     		aire.repaint();
     	}
     }
