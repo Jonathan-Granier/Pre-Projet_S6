@@ -16,7 +16,9 @@ public class Joueur {
 		this.iaLevel = iaLevel;
 	}
 
-
+	public void incrScore(){
+		score++;
+	}
 
 	public int getIaLevel() {
 		return iaLevel;

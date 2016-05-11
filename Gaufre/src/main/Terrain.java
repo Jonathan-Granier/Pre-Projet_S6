@@ -48,7 +48,7 @@ public class Terrain {
 	
 	// Renvoie vrai <=> le coup donné est autorise
 	public boolean est_autorise(Point coup){
-		if(coup.x<0 || coup.x>=l || coup.y<0 || coup.y>=h) return false;
+		if(coup.x<0 || coup.x>=l || coup.y<0 || coup.y>=h || coup.equals(new Point(0,0))) return false;
 		else return t[coup.x][coup.y];
 	}
 	
@@ -60,6 +60,7 @@ public class Terrain {
 				if(t[i][j]) res.add(new Point(i,j));
 			}
 		}
+		res.remove(new Point(0,0));
 		return res;
 	}
 	

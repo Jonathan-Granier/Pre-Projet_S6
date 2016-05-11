@@ -8,8 +8,7 @@ public class Moteur {
 	int joueur;		// joueur actuel : 1 ou 2
 	ArrayList<Terrain> histo,redo;
 	String message;
-	Joueur j1;
-	Joueur j2;
+	Joueur [] j;
 	
 	public Moteur(Terrain T,Joueur j1, Joueur j2){
 		this.T=T;
@@ -18,12 +17,13 @@ public class Moteur {
 		redo=new ArrayList<Terrain>();
 		joueur = 1;
 		message = "Tour du joueur " + joueur;
-		this.j1 = j1;
-		this.j2 = j2;
+		j = new Joueur[3];
+		j[1] = j1;
+		j[2] = j2;
 	}
 	
 	// Réinitialise le terrain
-	void nouvelle_partie(){
+	public void nouvelle_partie(){
 		for(int i=0;i<T.l;i++){
 			for(int j=0;j<T.h;j++){
 				T.t[i][j]=true;
@@ -34,6 +34,10 @@ public class Moteur {
 		redo.clear();
 		joueur = 1;
 		message = "Tour du joueur " + joueur;
+	}
+	
+	public int getJ(){
+		return joueur;
 	}
 	
 	// Change de joueur 1 <-> 2
@@ -52,41 +56,16 @@ public class Moteur {
 		return (!T.t[1][0] && !T.t[0][1]) || !T.t[0][0];
 	}
 	
-	// Renvoie vrai <=> le coup donné est autorise
-	/*public boolean est_autorise(Point coup){
-		if(coup.x<0 || coup.x>=T.l || coup.y<0 || coup.y>=T.h) return false;
-		else return T.t[coup.x][coup.y];
-	}*/
-	
-	// Renvoie une ArrayList des coups autorises (0,0) compris
-	/*public ArrayList<Point> coups_possibles(){
-		return T.coups_possibles();
-	}*/
-	
-	// Renvoie le terrain après le coup donné. Ne modifie pas l'état actuel.
-	/*public Terrain consulter_coup(Point coup){
-		Terrain tmp = T.clone();
-		int x = coup.x;
-		int y = coup.y;
-		if(T.est_autorise(coup)){
-			for(int i=x;i<tmp.l;i++){
-				for(int j=y;j<tmp.h;j++){
-					tmp.t[i][j]=false;
-				}
-			}
-		}
-		return tmp;
-	}*/
-	
-	// Joue un coup aux coordonnées donnees. Si le coup n'est pas possible, rien ne se passe et retourne 1,
-	//si la partie est terminée, retourne -1, 0 sinon.
+	// Joue un coup aux coordonnées donnees. Si le coup n'est pas possible, rien ne se passe et retourne -1,
+	// si la partie est terminée, retourne le numero du joueur qui a gagne, 0 sinon.
 	public int jouer_coup(Point coup){
 		if(T.est_autorise(coup)){
 			T=T.consulter_coup(coup);
 			if(partie_terminee()){
 				if(s_est_suicide(joueur)) swap_joueur();
 				message = "Joueur " + joueur + " gagne!";
-				return -1;
+				j[joueur].incrScore();
+				return joueur;
 			}
 			histo.add(T.clone());
 			redo.clear();
@@ -95,8 +74,13 @@ public class Moteur {
 			return 0;
 		}
 		else{
-			return 1;
+			return -1;
 		}
+	}
+	
+	public void initScore(){
+		j[1].setScore(0);
+		j[2].setScore(0);
 	}
 	
 	// Recule d'un cran dans l'historique. Renvoie 0 si tout s'est bien passé, 1 si on est déjà au terrain de départ.
@@ -109,11 +93,6 @@ public class Moteur {
 			message = "Tour du joueur " + joueur;
 			return 0;
 		}
-	}
-	
-	public void initScore(){
-		j1.setScore(0);
-		j2.setScore(0);
 	}
 	
 	// Le contraire d'annuler. Renvoie 0 si tout s'est bien passé, 1 si on est à la fin de l'historique.
